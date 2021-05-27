@@ -1,8 +1,8 @@
 {
   "name": "DuckburgPWA",
   "short_name": "DuckburgPWA",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "theme_color": "#2090c4",
+  "background_color": "#202332",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
