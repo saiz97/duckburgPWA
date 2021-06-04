@@ -1,1 +1,65 @@
-/* You can add global styles to this file, and also import other style files */
+@import '_colors';
+
+html, body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: $font-color;
+}
+
+a {
+  text-decoration: none;
+  color: $font-color;
+}
+
+.plr-5 {
+  padding: 0 1rem;
+}
+
+.flex-r {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-c {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* SIDE-NAVIGATION */
+.side-nav-container {
+  height: 100%;
+
+  .side-nav-nav {
+    align-items: flex-start;
+  }
+
+  .side-nav {
+    background-color: $background-white;
+    padding: 1rem 1.5rem 0 1.5rem;
+    border: none;
+    cursor: pointer;
+
+    .side-nav-nav {
+      .nav-item {
+        padding-left: 0.5rem;
+        margin-bottom: 0.5rem;
+
+        &:hover:not(.active) {
+          color: $primary-blue;
+          border-left: 0.2rem solid $primary-blue;
+        }
+      }
+      .active {
+        color: $primary-organe;
+        border-left: 0.2rem solid $primary-organe;
+      }
+    }
+  }
+}

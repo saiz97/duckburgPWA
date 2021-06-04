@@ -1,0 +1,15 @@
+<mat-drawer-container class="side-nav-container">
+  <mat-drawer class="side-nav" mode="side" opened>
+    <h2>Marketplace</h2>
+    <div class="side-nav-nav flex-c">
+      <a class="nav-item" [class.active]="selectedCategory == 'comics'" (click)="selectedCategory = 'comics'">Comics</a>
+      <a class="nav-item" [class.active]="selectedCategory == 'figures'" (click)="selectedCategory = 'figures'">Figures</a>
+      <a class="nav-item" [class.active]="selectedCategory == 'clothes'" (click)="selectedCategory = 'clothes'">Clothes</a>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div *ngIf="selectedCategory == 'comics'"><app-mp-comics></app-mp-comics></div>
+    <div *ngIf="selectedCategory == 'figures'"><app-mp-figures></app-mp-figures></div>
+    <div *ngIf="selectedCategory == 'clothes'"><app-mp-clothes></app-mp-clothes></div>
+  </mat-drawer-content>
+</mat-drawer-container>

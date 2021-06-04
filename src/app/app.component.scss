@@ -1,0 +1,29 @@
+@import '_colors';
+
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 3rem 1rem !important;
+
+  .brand {
+    svg {
+      width: 100%;
+    }
+  }
+
+  .nav-item {
+    font-size: 1rem;
+    border-bottom: 0.2rem solid transparent;
+
+    &:hover {
+      color: $primary-blue;
+      border-color: $primary-blue;
+    }
+
+    &.active {
+      color: $primary-organe;
+      border-color: $primary-organe;
+    }
+  }
+}

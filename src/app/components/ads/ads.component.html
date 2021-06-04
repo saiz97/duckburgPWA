@@ -1,0 +1,13 @@
+<mat-drawer-container class="side-nav-container">
+  <mat-drawer class="side-nav" mode="side" opened>
+    <h2>Marketplace</h2>
+    <div class="side-nav-nav flex-c">
+      <a class="nav-item" [class.active]="selectedNavItem == 'overview'" (click)="selectedNavItem = 'overview'">My Items</a>
+      <a class="nav-item" [class.active]="selectedNavItem == 'new'" (click)="selectedNavItem = 'new'">Add New Item</a>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div *ngIf="selectedNavItem == 'overview'"><app-ads-overview></app-ads-overview></div>
+    <div *ngIf="selectedNavItem == 'new'"><app-ads-new-item></app-ads-new-item></div>
+  </mat-drawer-content>
+</mat-drawer-container>
