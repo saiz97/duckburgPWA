@@ -8,7 +8,7 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class DataService {
 
-  private BASE_URL: string = "https://api.s1810456031.student.kwmhgb.at/wp-json/duckburg/";
+  private BASE_URL: string = "https://api.s1810456031.student.kwmhgb.at/wp-json/duckburg";
 
   isLoading = new BehaviorSubject<boolean>(false);
 
