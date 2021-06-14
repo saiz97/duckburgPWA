@@ -1,1 +1,21 @@
-<p>mp-figures works!</p>
+<div class="filter-container">
+  <mat-button-toggle-group #group="matButtonToggleGroup" (change)="currentPage = group.value">
+    <mat-button-toggle [value]="f.key" *ngFor="let f of figures | keyvalue">
+      {{f.key}}
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+<app-loader *ngIf="isLoading"></app-loader>
+
+<div class="card-container">
+  <a class="card-link" *ngFor="let f of displayedFigures()">
+    <mat-card class="card figure">
+      <img mat-card-image [src]="f.image" alt="Image of {{f.title}}">
+      <mat-card-actions>
+        <h3><mat-icon>euro</mat-icon> {{f.price}}</h3>
+        <button><mat-icon>shopping_cart</mat-icon></button>
+      </mat-card-actions>
+    </mat-card>
+  </a>
+
+</div>
