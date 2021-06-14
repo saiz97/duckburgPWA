@@ -1,0 +1,22 @@
+.loader {
+  width: clamp(100px, 10vw, 250px);
+  height: auto;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  animation: jump 1.2s infinite;
+  -webkit-animation: jump 1.7s infinite;
+}
+
+@keyframes jump {
+    0% { transform: translate(-50%, -50%) scale(1.25, 0.75); }
+    50% { transform: translate(-50%, -150%) scale(1, 1); }
+    55% { transform: translate(-50%, -150%) rotate(15deg); }
+    60% { transform: translate(-50%, -150%) rotate(-15deg); }
+    65% { transform: translate(-50%, -150%) rotate(15deg); }
+    70% { transform: translate(-50%, -150%) rotate(-15deg); }
+    100% { transform: translate(-50%, -50%) scale(1.25, 0.75); }
+}
