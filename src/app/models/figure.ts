@@ -1,11 +1,11 @@
 export class Figure {
   constructor(
-    id: number,
-    owner: string,
-    title: string,
-    description: string,
-    image: string,
-    size: string,
-    price: number
+    public id: number,
+    public owner: string,
+    public title: string,
+    public description: string,
+    public image: string,
+    public size: string,
+    public price: number
   ) {}
 }

@@ -1,17 +1,17 @@
 export class Comic {
   constructor(
-    id: number,
-    owner: string,
-    title: string,
-    description: string,
-    image: string,
-    type: string,
-    author: string,
-    age: number,
-    isbn: number,
-    pages: number,
-    publisher: string,
-    publish_date: Date,
-    price: number
+    public id: number,
+    public owner: string,
+    public title: string,
+    public description: string,
+    public image: string,
+    public type: string,
+    public author: string,
+    public age: number,
+    public isbn: number,
+    public pages: number,
+    public publisher: string,
+    public publish_date: Date,
+    public price: number
   ) {}
 }

@@ -22,6 +22,7 @@ export class ObjectFactory {
   }
 
   static figureFromObject(rawFigure: any): Figure {
+    console.log("==", rawFigure)
     return new Figure(
       +rawFigure.id,
       rawFigure.owner,
