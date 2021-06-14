@@ -1,8 +1,5 @@
 # DuckburgPWA
 
-https://angular.io/guide/service-worker-getting-started
+This application was created as part of an elective course in the bachelor program Communication and Knowledge Media.
 
-ng build --prod
-http-server -p 8080 -c-1 .\dist\DuckburgPWA
-
-https://angular.io/guide/service-worker-communications
+It is a trading and sales platform for fan articles and merch from Duckburg, which was implemented as an Angular progressive web app.
