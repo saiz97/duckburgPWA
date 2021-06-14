@@ -15,6 +15,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatCardModule} from '@angular/material/card';
+import {MatSelectModule} from '@angular/material/select';
 
 import { MarketplaceComponent } from './components/marketplace/marketplace.component';
 import { AdsComponent } from './components/ads/ads.component';
@@ -26,7 +29,6 @@ import { MpFiguresComponent } from './components/marketplace/mp-figures/mp-figur
 import { MpClothesComponent } from './components/marketplace/mp-clothes/mp-clothes.component';
 import { AdsOverviewComponent } from './components/ads/ads-overview/ads-overview.component';
 import { AdsNewItemComponent } from './components/ads/ads-new-item/ads-new-item.component';
-import { MpItemComponent } from './components/marketplace/mp-item/mp-item.component';
 
 import { DataService } from './service/data.service';
 import { TokenInterceptor } from './service/token.interceptor';
@@ -45,7 +47,6 @@ import { LoaderComponent } from './shared/loader/loader.component';
     MpClothesComponent,
     AdsOverviewComponent,
     AdsNewItemComponent,
-    MpItemComponent,
     LoaderComponent
   ],
   imports: [
@@ -56,6 +57,9 @@ import { LoaderComponent } from './shared/loader/loader.component';
     MatToolbarModule,
     MatIconModule,
     MatSidenavModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatSelectModule,
     HttpClientModule,
   ],
   providers: [
