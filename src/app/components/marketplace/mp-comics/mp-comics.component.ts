@@ -13,11 +13,13 @@ import { ObjectFactory } from 'src/app/models/object.factory';
 export class MpComicsComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   currentPage: number = 1;
+  filters: {[key: string]: string} = {};
 
   loadingSubscription: Subscription;
   comicSubscription: Subscription;
 
   comics: Map<number, Comic[]> = new Map();
+
 
   constructor(private dataService: DataService) { }
 
@@ -28,6 +30,13 @@ export class MpComicsComponent implements OnInit, OnDestroy {
       this.dataService.isLoading.next(false);
       this.initComicMap(response.max_pages, response.selected_page, response.data);
     })
+  }
+
+  loadFilteredComics() {
+    this.currentPage = 1;
+    // filters set
+    // comics reset
+    this.comics.clear();
   }
 
   displayedComics() {
@@ -43,7 +52,24 @@ export class MpComicsComponent implements OnInit, OnDestroy {
       this.comics.get(page).push(ObjectFactory.comicFromObject(comic));
     }
 
-    console.log("Comics loaded: ", this.comics);
+    console.info("Comics loaded: ", this.comics);
+  }
+
+  changePage(selectedPage: number) {
+    this.currentPage = selectedPage;
+    if (this.comics.get(selectedPage).length == 0) {
+      this.filters.page = selectedPage.toString();
+
+      console.info("Filters: ", this.filters);
+      this.comicSubscription = this.dataService.getAllComics(this.filters).subscribe((response) => {
+        this.dataService.isLoading.next(false);
+        this.comics.set(+response.selected_page, response.data);
+        console.info("Comics loaded: ", this.comics);
+      });
+    } else {
+      // data already loaded, do nothing
+      console.info("Content already loaded: ", this.comics.get(selectedPage));
+    }
   }
 
   ngOnDestroy(): void {

@@ -13,6 +13,7 @@ import { ObjectFactory } from 'src/app/models/object.factory';
 export class MpClothesComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   currentPage: number = 1;
+  filters: {[key: string]: string} = {};
 
   loadingSubscription: Subscription;
   clothesSubscription: Subscription;
@@ -32,6 +33,23 @@ export class MpClothesComponent implements OnInit, OnDestroy {
 
   displayedClothes() {
     return this.clothes.get(this.currentPage);
+  }
+
+  changePage(selectedPage: number) {
+    this.currentPage = selectedPage;
+    if (this.clothes.get(selectedPage).length == 0) {
+      this.filters.page = selectedPage.toString();
+
+      console.info("Filters: ", this.filters);
+      this.clothesSubscription = this.dataService.getAllClothes(this.filters).subscribe((response) => {
+        this.dataService.isLoading.next(false);
+        this.clothes.set(+response.selected_page, response.data);
+        console.info("Clothes loaded: ", this.clothes);
+      });
+    } else {
+      // data already loaded, do nothing
+      console.info("Content already loaded: ", this.clothes.get(selectedPage));
+    }
   }
 
   initClothesMap(pages, page, clothes) {

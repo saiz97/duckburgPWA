@@ -1,6 +1,6 @@
 <div class="filter-container">
-  <mat-button-toggle-group #group="matButtonToggleGroup" (change)="currentPage = group.value">
-    <mat-button-toggle [value]="c.key" *ngFor="let c of clothes | keyvalue">
+  <mat-button-toggle-group #group="matButtonToggleGroup" (change)="changePage(group.value)">
+    <mat-button-toggle [value]="c.key" *ngFor="let c of clothes | keyvalue" [class.mat-button-toggle-checked] = "c.key == currentPage">
       {{c.key}}
     </mat-button-toggle>
   </mat-button-toggle-group>

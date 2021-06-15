@@ -13,6 +13,7 @@ import { Figure } from 'src/app/models/figure';
 export class MpFiguresComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   currentPage: number = 1;
+  filters: {[key: string]: string} = {};
 
   loadingSubscription: Subscription;
   figureSubscription: Subscription;
@@ -32,6 +33,23 @@ export class MpFiguresComponent implements OnInit, OnDestroy {
 
   displayedFigures() {
     return this.figures.get(this.currentPage);
+  }
+
+  changePage(selectedPage: number) {
+    this.currentPage = selectedPage;
+    if (this.figures.get(selectedPage).length == 0) {
+      this.filters.page = selectedPage.toString();
+
+      console.info("Filters: ", this.filters);
+      this.figureSubscription = this.dataService.getAllFigures(this.filters).subscribe((response) => {
+        this.dataService.isLoading.next(false);
+        this.figures.set(+response.selected_page, response.data);
+        console.info("Figures loaded: ", this.figures);
+      });
+    } else {
+      // data already loaded, do nothing
+      console.info("Content already loaded: ", this.figures.get(selectedPage));
+    }
   }
 
   initFiguresMap(pages, page, figures) {

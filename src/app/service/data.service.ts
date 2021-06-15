@@ -14,27 +14,19 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  getAllComics(params: { [index: string]: any } = {}): Observable<any> {
-    return this.http.get(`${this.BASE_URL}/comics`, { headers: new HttpHeaders(), params: this.handleParameters(params) })
+  getAllComics(params: { [index: string]: string } = {}): Observable<any> {
+    return this.http.get(`${this.BASE_URL}/comics`, { headers: new HttpHeaders(), params: params })
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   getAllFigures(params: { [index: string]: any } = {}): Observable<any> {
-    return this.http.get(`${this.BASE_URL}/figures`, { headers: new HttpHeaders(), params: this.handleParameters(params) })
+    return this.http.get(`${this.BASE_URL}/figures`, { headers: new HttpHeaders(), params: params })
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   getAllClothes(params: { [index: string]: any } = {}): Observable<any> {
-    return this.http.get(`${this.BASE_URL}/clothes`, { headers: new HttpHeaders(), params: this.handleParameters(params) })
+    return this.http.get(`${this.BASE_URL}/clothes`, { headers: new HttpHeaders(), params: params })
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
-  }
-
-  private handleParameters(params: { [index: string]: any } = {}) : HttpParams {
-    const parameters = new HttpParams();
-    Object.entries(params).forEach(([key, value]) => {
-      parameters.set(key, value);
-    });
-    return parameters;
   }
 
   private errorHandler(error: Error | any): Observable<any> {
