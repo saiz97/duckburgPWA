@@ -4,33 +4,32 @@
   <div class="row">
     <mat-form-field appearance="fill">
       <mat-label>Choose a type</mat-label>
-      <mat-select>
+      <mat-select [(value)]="selectedType">
         <mat-option value="">All Types</mat-option>
-        <mat-option value="Paperback">Paperback</mat-option>
-        <mat-option value="Hardback edition">Hardback edition</mat-option>
+        <mat-option [value]="type" *ngFor="let type of filterOptions.types">{{type}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a year</mat-label>
+      <mat-select [(value)]="selectedYear">
+        <mat-option value="">All Years</mat-option>
+        <mat-option [value]="year" *ngFor="let year of filterOptions.years">{{year}}</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="example-form-field">
-      <mat-label>Year</mat-label>
-      <input matInput type="number" min="0" [(ngModel)]="fromVal">
-      <button *ngIf="fromVal" matSuffix mat-icon-button aria-label="Clear" (click)="fromVal=''">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field>
-
-    <mat-form-field class="example-form-field">
       <mat-label>Price from:</mat-label>
-      <input matInput type="number" min="0" [(ngModel)]="fromVal">
-      <button *ngIf="fromVal" matSuffix mat-icon-button aria-label="Clear" (click)="fromVal=''">
+      <input matInput type="number" [min]="filterOptions.minPrice" [max]="filterOptions.maxPrice" [(ngModel)]="fromVal">
+      <button *ngIf="fromVal" matSuffix mat-icon-button aria-label="Clear" (click)="fromVal=filterOptions.minPrice">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
 
     <mat-form-field class="example-form-field">
       <mat-label>Price to:</mat-label>
-      <input matInput type="number" min="0" [(ngModel)]="toVal">
-      <button *ngIf="toVal" matSuffix mat-icon-button aria-label="Clear" (click)="toVal=''">
+      <input matInput type="number" [min]="filterOptions.minPrice" [max]="filterOptions.maxPrice" [(ngModel)]="toVal">
+      <button *ngIf="toVal" matSuffix mat-icon-button aria-label="Clear" (click)="toVal=filterOptions.maxPrice">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>

@@ -15,8 +15,19 @@ export class MpFiguresComponent implements OnInit, OnDestroy {
   currentPage: number = 1;
   filters: {[key: string]: string} = {};
 
+  filterOptions = {
+    "sizes": [],
+    "minPrice": 0,
+    "maxPrice": 0
+  }
+
+  selectedSize: string = "";
+  fromVal: number = 0;
+  toVal: number = 0;
+
   loadingSubscription: Subscription;
   figureSubscription: Subscription;
+  filterSubscription: Subscription;
 
   figures: Map<number, Figure[]> = new Map();
 
@@ -24,6 +35,14 @@ export class MpFiguresComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadingSubscription = this.dataService.isLoading.subscribe((state) => this.isLoading = state);
+
+    this.filterSubscription = this.dataService.getFigureFilterData().subscribe((response) => {
+      this.filterOptions.sizes = response.sizes;
+      this.filterOptions.minPrice = +response.min_price;
+      this.filterOptions.maxPrice = +response.max_price;
+      this.fromVal = +this.filterOptions.minPrice;
+      this.toVal = +this.filterOptions.maxPrice;
+    })
 
     this.figureSubscription = this.dataService.getAllFigures().subscribe((response) => {
       this.dataService.isLoading.next(false);

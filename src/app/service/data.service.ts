@@ -19,13 +19,28 @@ export class DataService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
+  getComicFilterData() {
+    return this.http.get(`${this.BASE_URL}/comics/filters`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
   getAllFigures(params: { [index: string]: any } = {}): Observable<any> {
     return this.http.get(`${this.BASE_URL}/figures`, { headers: new HttpHeaders(), params: params })
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
+  getFigureFilterData() {
+    return this.http.get(`${this.BASE_URL}/figures/filters`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
   getAllClothes(params: { [index: string]: any } = {}): Observable<any> {
     return this.http.get(`${this.BASE_URL}/clothes`, { headers: new HttpHeaders(), params: params })
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  getClothesFilterData() {
+    return this.http.get(`${this.BASE_URL}/clothes/filters`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 

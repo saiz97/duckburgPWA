@@ -15,8 +15,21 @@ export class MpClothesComponent implements OnInit, OnDestroy {
   currentPage: number = 1;
   filters: {[key: string]: string} = {};
 
+  filterOptions = {
+    "types": [],
+    "sizes": [],
+    "minPrice": 0,
+    "maxPrice": 0
+  }
+
+  selectedType: string = "";
+  selectedSize: string = "";
+  fromVal: number = 0;
+  toVal: number = 0;
+
   loadingSubscription: Subscription;
   clothesSubscription: Subscription;
+  filterSubscription: Subscription;
 
   clothes: Map<number, Clothes[]> = new Map();
 
@@ -24,6 +37,15 @@ export class MpClothesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadingSubscription = this.dataService.isLoading.subscribe((state) => this.isLoading = state);
+
+    this.filterSubscription = this.dataService.getClothesFilterData().subscribe((response) => {
+      this.filterOptions.types = response.types;
+      this.filterOptions.sizes = response.sizes;
+      this.filterOptions.minPrice = +response.min_price;
+      this.filterOptions.maxPrice = +response.max_price;
+      this.fromVal = +this.filterOptions.minPrice;
+      this.toVal = +this.filterOptions.maxPrice;
+    })
 
     this.clothesSubscription = this.dataService.getAllClothes().subscribe((response) => {
       this.dataService.isLoading.next(false);

@@ -15,11 +15,22 @@ export class MpComicsComponent implements OnInit, OnDestroy {
   currentPage: number = 1;
   filters: {[key: string]: string} = {};
 
-  fromVal: string = "";
-  toVal: string = "";
+  filterOptions = {
+    "types": [],
+    "years": [],
+    "minPrice": 0,
+    "maxPrice": 0
+  }
+
+  selectedType: string = "";
+  selectedYear: string = "";
+  fromVal: number = 0;
+  toVal: number = 0;
+
 
   loadingSubscription: Subscription;
   comicSubscription: Subscription;
+  filterSubscription: Subscription;
 
   comics: Map<number, Comic[]> = new Map();
 
@@ -28,6 +39,15 @@ export class MpComicsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadingSubscription = this.dataService.isLoading.subscribe((state) => this.isLoading = state);
+
+    this.filterSubscription = this.dataService.getComicFilterData().subscribe((response) => {
+      this.filterOptions.types = response.types;
+      this.filterOptions.years = response.years;
+      this.filterOptions.minPrice = +response.min_price;
+      this.filterOptions.maxPrice = +response.max_price;
+      this.fromVal = +this.filterOptions.minPrice;
+      this.toVal = +this.filterOptions.maxPrice;
+    })
 
     this.comicSubscription = this.dataService.getAllComics().subscribe((response) => {
       this.dataService.isLoading.next(false);
