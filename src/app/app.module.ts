@@ -15,10 +15,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {MatCardModule} from '@angular/material/card';
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 
 import { MarketplaceComponent } from './components/marketplace/marketplace.component';
 import { AdsComponent } from './components/ads/ads.component';
@@ -34,6 +34,13 @@ import { AdsNewItemComponent } from './components/ads/ads-new-item/ads-new-item.
 import { DataService } from './service/data.service';
 import { TokenInterceptor } from './service/token.interceptor';
 import { LoaderComponent } from './shared/loader/loader.component';
+import { ItemDetailComponent } from './components/item-detail/item-detail.component';
+
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeDEAT from '@angular/common/locales/de-AT';
+
+registerLocaleData(localeDEAT);
 
 @NgModule({
   declarations: [
@@ -48,7 +55,8 @@ import { LoaderComponent } from './shared/loader/loader.component';
     MpClothesComponent,
     AdsOverviewComponent,
     AdsNewItemComponent,
-    LoaderComponent
+    LoaderComponent,
+    ItemDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +64,7 @@ import { LoaderComponent } from './shared/loader/loader.component';
     FormsModule, ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
-    
+
     MatToolbarModule,
     MatIconModule,
     MatSidenavModule,
@@ -70,6 +78,10 @@ import { LoaderComponent } from './shared/loader/loader.component';
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'de-at'
     },
     {
       provide: HTTP_INTERCEPTORS,

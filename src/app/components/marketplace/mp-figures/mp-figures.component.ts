@@ -79,7 +79,6 @@ export class MpFiguresComponent implements OnInit, OnDestroy {
   }
 
   initFiguresMap(pages, page, figures) {
-    console.log("== ", pages, page, figures)
     for (let i = 1; i <= pages; i++) {
       this.figures.set(i, []);
     }

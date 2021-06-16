@@ -9,15 +9,14 @@
         <mat-option [value]="type" *ngFor="let type of filterOptions.types">{{type}}</mat-option>
       </mat-select>
     </mat-form-field>
-<!--
+
     <mat-form-field appearance="fill">
       <mat-label>Choose a year</mat-label>
-      <mat-select [(value)]="selectedYear">
+      <mat-select [(value)]="selectedYear" disabled>
         <mat-option value="">All Years</mat-option>
         <mat-option [value]="year" *ngFor="let year of filterOptions.years">{{year}}</mat-option>
       </mat-select>
     </mat-form-field>
--->
 
     <mat-form-field class="example-form-field">
       <mat-label>Price from:</mat-label>

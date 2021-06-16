@@ -4,6 +4,11 @@ import { Figure } from "./figure";
 
 export class ObjectFactory {
   static comicFromObject(rawComic: any): Comic {
+    const date = (rawComic.publish_date != '' && rawComic.publish_date.toString().includes('/'))
+        ? new Date(rawComic.publish_date.split('/').reverse().join('-'))
+        : new Date(rawComic.publish_date);
+
+    const date2: Date = null;
     return new Comic(
       +rawComic.id,
       rawComic.owner,
@@ -16,13 +21,12 @@ export class ObjectFactory {
       +rawComic.isbn,
       +rawComic.pages,
       rawComic.publisher,
-      new Date(rawComic.publish_date),
+      date,
       +rawComic.price
     );
   }
 
   static figureFromObject(rawFigure: any): Figure {
-    console.log("==", rawFigure)
     return new Figure(
       +rawFigure.id,
       rawFigure.owner,

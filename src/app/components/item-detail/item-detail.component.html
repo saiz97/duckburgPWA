@@ -1,0 +1,55 @@
+<div class="container" *ngIf="item;else loading">
+
+  <div class="content-sidebar">
+    <div class="item-details">
+      <div class="header">
+        <h1>{{item.title}}</h1>
+      </div>
+      <div class="owner-col">
+        <p><span><b>{{'Author:' | uppercase}}</b> {{item.owner}}</span><span> | </span><span><b>{{'Price:' | uppercase}}</b> {{item.price | currency:'EUR':true }}</span></p>
+      </div>
+      <div class="info-col1">
+        <img [src]="item.image" alt="Image of {{item.title}}">
+        <article>
+          <h3>{{'Description' | uppercase}}</h3>
+          <p>{{item.description}}</p>
+        </article>
+      </div>
+      <div class="info-col2" *ngIf="type != ''">
+        <h3>{{'More Details' | uppercase}}</h3>
+        <article *ngIf="type == 'comic'">
+          <p *ngIf="item.age">Age: {{item.age}}</p>
+          <p *ngIf="item.type">Type: {{item.type}}</p>
+          <p *ngIf="item.author">Author: {{item.author}}</p>
+          <p *ngIf="item.pages">Pages: {{item.pages}}</p>
+          <p *ngIf="item.publisher">Publisher: {{item.publisher}}</p>
+          <p *ngIf="item.publish_date">Published: {{item.publish_date | date: 'longDate' : 'GMT' : 'en-US' }}</p>
+          <p *ngIf="item.isbn">ISBN: {{item.isbn}}</p>
+        </article>
+
+        <article *ngIf="type == 'figure'">
+          <p *ngIf="item.size">Size: {{item.size}}</p>
+        </article>
+
+        <article *ngIf="type == 'clothes'">
+          <p *ngIf="item.type">Type: {{item.type}}</p>
+          <p *ngIf="item.size">Size: {{item.size}}</p>
+        </article>
+      </div>
+    </div>
+    <div class="button-group flex-c">
+      <!--<mat-icon>favorite_border</mat-icon>-->
+      <button class="add-to-wishlist"><mat-icon>favorite</mat-icon>{{'Add to wishlist' | uppercase}}</button>
+      <button class="buy-item"><mat-icon>shopping_cart</mat-icon>{{'Gimme that!' | uppercase}}</button>
+    </div>
+  </div>
+  <div class="comments">
+    <h2>Comments</h2>
+  </div>
+
+
+</div>
+
+<ng-template #loading>
+  <app-loader></app-loader>
+</ng-template>
