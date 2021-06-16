@@ -64,6 +64,16 @@ a {
   }
 }
 
+/* FILTER CONTAINER */
+.filter-container {
+  .row {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+  }
+}
+
+
 /* CARDS */
 .card-link:hover {
   cursor: pointer;
@@ -90,18 +100,18 @@ a {
       justify-content: center;
     }
 
-    button {
-      background: none;
-      border: none;
-
-      &:hover {
-        cursor: pointer;
-        color: $primary-organe;
-        transition-duration: 0.2s;
-      }
+    button:hover {
+      cursor: pointer;
+      color: $primary-organe;
+      transition-duration: 0.2s;
     }
-
   }
+}
+
+button, button[mat-icon-button] {
+  cursor: pointer;
+  background: none;
+  border: none;
 }
 
 .card-container {

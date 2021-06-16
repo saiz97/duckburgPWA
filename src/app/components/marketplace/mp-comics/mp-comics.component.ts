@@ -15,6 +15,9 @@ export class MpComicsComponent implements OnInit, OnDestroy {
   currentPage: number = 1;
   filters: {[key: string]: string} = {};
 
+  fromVal: string = "";
+  toVal: string = "";
+
   loadingSubscription: Subscription;
   comicSubscription: Subscription;
 
@@ -70,6 +73,10 @@ export class MpComicsComponent implements OnInit, OnDestroy {
       // data already loaded, do nothing
       console.info("Content already loaded: ", this.comics.get(selectedPage));
     }
+  }
+
+  checkDataForPageExists(): boolean {
+    return this.comics.get(this.currentPage).length != 0;
   }
 
   ngOnDestroy(): void {

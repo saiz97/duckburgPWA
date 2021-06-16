@@ -1,21 +1,29 @@
+<h1>Clothes</h1>
+
 <div class="filter-container">
-  <mat-button-toggle-group #group="matButtonToggleGroup" (change)="changePage(group.value)">
+  <mat-button-toggle-group #group="matButtonToggleGroup" (change)="changePage(group.value)" *ngIf="clothes.size > 1">
     <mat-button-toggle [value]="c.key" *ngFor="let c of clothes | keyvalue" [class.mat-button-toggle-checked] = "c.key == currentPage">
       {{c.key}}
     </mat-button-toggle>
   </mat-button-toggle-group>
 </div>
-<app-loader *ngIf="isLoading"></app-loader>
 
-<div class="card-container">
-  <a class="card-link" *ngFor="let c of displayedClothes()">
-    <mat-card class="card comic">
-      <img mat-card-image [src]="c.image" alt="Image of {{c.title}}">
-      <mat-card-actions>
-        <h3><mat-icon>euro</mat-icon> {{c.price}}</h3>
-        <button><mat-icon>shopping_cart</mat-icon></button>
-      </mat-card-actions>
-    </mat-card>
-  </a>
+<app-loader *ngIf="isLoading;else cardcontainer"></app-loader>
 
-</div>
+<ng-template #cardcontainer>
+  <div class="card-container" *ngIf="checkDataForPageExists();else nodata">
+    <a class="card-link" *ngFor="let c of displayedClothes()">
+      <mat-card class="card comic">
+        <img mat-card-image [src]="c.image" alt="Image of {{c.title}}">
+        <mat-card-actions>
+          <h3><mat-icon>euro</mat-icon> {{c.price}}</h3>
+          <button><mat-icon>shopping_cart</mat-icon></button>
+        </mat-card-actions>
+      </mat-card>
+    </a>
+  </div>
+</ng-template>
+
+<ng-template #nodata>
+  <h3>No data for this page.</h3>
+</ng-template>

@@ -64,6 +64,10 @@ export class MpClothesComponent implements OnInit, OnDestroy {
     console.log("Clothes loaded: ", this.clothes);
   }
 
+  checkDataForPageExists(): boolean {
+    return this.clothes.get(this.currentPage).length != 0;
+  }
+
   ngOnDestroy(): void {
     this.loadingSubscription.unsubscribe();
     this.clothesSubscription.unsubscribe();

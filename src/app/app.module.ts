@@ -18,6 +18,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
 
 import { MarketplaceComponent } from './components/marketplace/marketplace.component';
 import { AdsComponent } from './components/ads/ads.component';
@@ -52,8 +53,10 @@ import { LoaderComponent } from './shared/loader/loader.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule, ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
+    
     MatToolbarModule,
     MatIconModule,
     MatSidenavModule,
@@ -61,6 +64,7 @@ import { LoaderComponent } from './shared/loader/loader.component';
     MatCardModule,
     MatSelectModule,
     HttpClientModule,
+    MatInputModule
   ],
   providers: [
     {

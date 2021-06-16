@@ -1,21 +1,66 @@
+<h1>Comics</h1>
+
 <div class="filter-container">
-  <mat-button-toggle-group #group="matButtonToggleGroup" (change)="changePage(group.value)">
-    <mat-button-toggle [value]="c.key" *ngFor="let c of comics | keyvalue" [class.mat-button-toggle-checked] = "c.key == currentPage">
-      {{c.key}}
-    </mat-button-toggle>
-  </mat-button-toggle-group>
-</div>
-<app-loader *ngIf="isLoading"></app-loader>
+  <div class="row">
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a type</mat-label>
+      <mat-select>
+        <mat-option value="">All Types</mat-option>
+        <mat-option value="Paperback">Paperback</mat-option>
+        <mat-option value="Hardback edition">Hardback edition</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-<div class="card-container">
-  <a class="card-link" *ngFor="let c of displayedComics()">
-    <mat-card class="card comic">
-      <img mat-card-image [src]="c.image" alt="Image of {{c.title}}">
-      <mat-card-actions>
-        <h3><mat-icon>euro</mat-icon> {{c.price}}</h3>
-        <button><mat-icon>shopping_cart</mat-icon></button>
-      </mat-card-actions>
-    </mat-card>
-  </a>
+    <mat-form-field class="example-form-field">
+      <mat-label>Year</mat-label>
+      <input matInput type="number" min="0" [(ngModel)]="fromVal">
+      <button *ngIf="fromVal" matSuffix mat-icon-button aria-label="Clear" (click)="fromVal=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
 
+    <mat-form-field class="example-form-field">
+      <mat-label>Price from:</mat-label>
+      <input matInput type="number" min="0" [(ngModel)]="fromVal">
+      <button *ngIf="fromVal" matSuffix mat-icon-button aria-label="Clear" (click)="fromVal=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field class="example-form-field">
+      <mat-label>Price to:</mat-label>
+      <input matInput type="number" min="0" [(ngModel)]="toVal">
+      <button *ngIf="toVal" matSuffix mat-icon-button aria-label="Clear" (click)="toVal=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-button-toggle-group #group="matButtonToggleGroup" (change)="changePage(group.value)" *ngIf="comics.size > 1">
+      <mat-button-toggle [value]="c.key" *ngFor="let c of comics | keyvalue" [class.mat-button-toggle-checked] = "c.key == currentPage">
+        {{c.key}}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
 </div>
+
+<app-loader *ngIf="isLoading;else cardcontainer"></app-loader>
+
+<ng-template #cardcontainer>
+  <div class="card-container" *ngIf="checkDataForPageExists();else nodata">
+    <a class="card-link" *ngFor="let c of displayedComics()">
+      <mat-card class="card comic">
+        <img mat-card-image [src]="c.image" alt="Image of {{c.title}}">
+        <mat-card-actions>
+          <h3><mat-icon>euro</mat-icon> {{c.price}}</h3>
+          <button><mat-icon>shopping_cart</mat-icon></button>
+        </mat-card-actions>
+      </mat-card>
+    </a>
+  </div>
+</ng-template>
+
+<ng-template #nodata>
+  <h3>No data for this page.</h3>
+</ng-template>

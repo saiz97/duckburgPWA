@@ -64,6 +64,10 @@ export class MpFiguresComponent implements OnInit, OnDestroy {
     console.log("Figures loaded: ", this.figures);
   }
 
+  checkDataForPageExists(): boolean {
+    return this.figures.get(this.currentPage).length != 0;
+  }
+
   ngOnDestroy(): void {
     this.loadingSubscription.unsubscribe();
     this.figureSubscription.unsubscribe();
