@@ -35,7 +35,40 @@ export class MpFiguresComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadingSubscription = this.dataService.isLoading.subscribe((state) => this.isLoading = state);
+    this.loadUnfiltered();
+  }
 
+  loadUnfiltered() {
+    this.currentPage = 1;
+    this.filters = {};
+    this.initFilterOptions();
+    this.getFigures();
+  }
+
+  loadFiltered() {
+    this.filters.page = "1";
+    this.currentPage = 1;
+
+    this.registerCurrentFilters();
+    this.getFigures(this.filters);
+  }
+
+  getFigures(filters = {}) {
+    this.figures = new Map();
+    console.log("FILTERS: ", filters);
+    this.figureSubscription = this.dataService.getAllFigures(filters).subscribe((response) => {
+      this.initFiguresMap(response.max_pages, response.selected_page, response.data);
+      this.dataService.isLoading.next(false);
+    })
+  }
+
+  registerCurrentFilters() {
+    if (this.selectedSize != "") this.filters.size = this.selectedSize;
+    this.filters.from = this.fromVal.toString();
+    this.filters.to = this.toVal.toString();
+  }
+
+  initFilterOptions() {
     this.filterSubscription = this.dataService.getFigureFilterData().subscribe((response) => {
       this.filterOptions.sizes = response.sizes;
       this.filterOptions.minPrice = +response.min_price;
@@ -43,15 +76,19 @@ export class MpFiguresComponent implements OnInit, OnDestroy {
       this.fromVal = +this.filterOptions.minPrice;
       this.toVal = +this.filterOptions.maxPrice;
     })
-
-    this.figureSubscription = this.dataService.getAllFigures().subscribe((response) => {
-      this.dataService.isLoading.next(false);
-      this.initFiguresMap(response.max_pages, response.selected_page, response.data);
-    })
   }
 
-  displayedFigures() {
-    return this.figures.get(this.currentPage);
+  initFiguresMap(pages, page, figures) {
+    console.log("== ", pages, page, figures)
+    for (let i = 1; i <= pages; i++) {
+      this.figures.set(i, []);
+    }
+
+    for (const figure of figures) {
+      this.figures.get(page).push(ObjectFactory.figureFromObject(figure));
+    }
+
+    console.log("Figures loaded: ", this.figures);
   }
 
   changePage(selectedPage: number) {
@@ -71,16 +108,8 @@ export class MpFiguresComponent implements OnInit, OnDestroy {
     }
   }
 
-  initFiguresMap(pages, page, figures) {
-    for (let i = 1; i <= pages; i++) {
-      this.figures.set(i, []);
-    }
-
-    for (const figure of figures) {
-      this.figures.get(page).push(ObjectFactory.figureFromObject(figure));
-    }
-
-    console.log("Figures loaded: ", this.figures);
+  displayedFigures() {
+    return this.figures.get(this.currentPage);
   }
 
   checkDataForPageExists(): boolean {

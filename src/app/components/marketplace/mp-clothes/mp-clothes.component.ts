@@ -13,7 +13,7 @@ import { ObjectFactory } from 'src/app/models/object.factory';
 export class MpClothesComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   currentPage: number = 1;
-  filters: {[key: string]: string} = {};
+  filters: { [key: string]: string } = {};
 
   filterOptions = {
     "types": [],
@@ -37,7 +37,41 @@ export class MpClothesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadingSubscription = this.dataService.isLoading.subscribe((state) => this.isLoading = state);
+    this.loadUnfiltered();
+  }
 
+    loadUnfiltered() {
+    this.currentPage = 1;
+    this.filters = {};
+    this.initFilterOptions();
+    this.getClothes();
+  }
+
+  loadFiltered() {
+    this.filters.page = "1";
+    this.currentPage = 1;
+
+    this.registerCurrentFilters();
+    this.getClothes(this.filters);
+  }
+
+  getClothes(filters = {}) {
+    this.clothes = new Map();
+    console.log("FILTERS: ", filters);
+    this.clothesSubscription = this.dataService.getAllClothes(filters).subscribe((response) => {
+      this.initClothesMap(response.max_pages, response.selected_page, response.data);
+      this.dataService.isLoading.next(false);
+    })
+  }
+
+  registerCurrentFilters() {
+    if (this.selectedType != "") this.filters.type = this.selectedType;
+    if (this.selectedSize != "") this.filters.size = this.selectedSize;
+    this.filters.from = this.fromVal.toString();
+    this.filters.to = this.toVal.toString();
+  }
+
+  initFilterOptions() {
     this.filterSubscription = this.dataService.getClothesFilterData().subscribe((response) => {
       this.filterOptions.types = response.types;
       this.filterOptions.sizes = response.sizes;
@@ -46,15 +80,18 @@ export class MpClothesComponent implements OnInit, OnDestroy {
       this.fromVal = +this.filterOptions.minPrice;
       this.toVal = +this.filterOptions.maxPrice;
     })
-
-    this.clothesSubscription = this.dataService.getAllClothes().subscribe((response) => {
-      this.dataService.isLoading.next(false);
-      this.initClothesMap(response.max_pages, response.selected_page, response.data);
-    })
   }
 
-  displayedClothes() {
-    return this.clothes.get(this.currentPage);
+  initClothesMap(pages, page, clothes) {
+    for (let i = 1; i <= pages; i++) {
+      this.clothes.set(i, []);
+    }
+
+    for (const cloth of clothes) {
+      this.clothes.get(page).push(ObjectFactory.clothesFromObject(cloth));
+    }
+
+    console.log("Clothes loaded: ", this.clothes);
   }
 
   changePage(selectedPage: number) {
@@ -74,16 +111,8 @@ export class MpClothesComponent implements OnInit, OnDestroy {
     }
   }
 
-  initClothesMap(pages, page, clothes) {
-    for (let i = 1; i <= pages; i++) {
-      this.clothes.set(i, []);
-    }
-
-    for (const cloth of clothes) {
-      this.clothes.get(page).push(ObjectFactory.clothesFromObject(cloth));
-    }
-
-    console.log("Clothes loaded: ", this.clothes);
+  displayedClothes() {
+    return this.clothes.get(this.currentPage);
   }
 
   checkDataForPageExists(): boolean {
@@ -93,5 +122,6 @@ export class MpClothesComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.loadingSubscription.unsubscribe();
     this.clothesSubscription.unsubscribe();
+    this.filterSubscription.unsubscribe();
   }
 }

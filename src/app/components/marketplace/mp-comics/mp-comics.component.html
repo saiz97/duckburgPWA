@@ -9,7 +9,7 @@
         <mat-option [value]="type" *ngFor="let type of filterOptions.types">{{type}}</mat-option>
       </mat-select>
     </mat-form-field>
-
+<!--
     <mat-form-field appearance="fill">
       <mat-label>Choose a year</mat-label>
       <mat-select [(value)]="selectedYear">
@@ -17,6 +17,7 @@
         <mat-option [value]="year" *ngFor="let year of filterOptions.years">{{year}}</mat-option>
       </mat-select>
     </mat-form-field>
+-->
 
     <mat-form-field class="example-form-field">
       <mat-label>Price from:</mat-label>
@@ -33,6 +34,13 @@
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
+
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="loadFiltered()">
+      <mat-icon>filter_alt</mat-icon> Apply filters
+    </button>
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="loadUnfiltered()">
+      <mat-icon>replay</mat-icon> Clear filters
+    </button>
   </div>
 
   <div class="row">
@@ -48,7 +56,7 @@
 
 <ng-template #cardcontainer>
   <div class="card-container" *ngIf="checkDataForPageExists();else nodata">
-    <a class="card-link" *ngFor="let c of displayedComics()">
+    <a routerLink="item/{{c.id}}" [state]="{ data: c, type: 'comic' }" class="card-link" *ngFor="let c of displayedComics()">
       <mat-card class="card comic">
         <img mat-card-image [src]="c.image" alt="Image of {{c.title}}">
         <mat-card-actions>
