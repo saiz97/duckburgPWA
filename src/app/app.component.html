@@ -30,7 +30,7 @@
       <span>Wishlist</span>
     </a>
   </nav>
-  <div class="registration flex-r">
+  <div class="registration flex-r" *ngIf="!loggedIn;else logout">
     <a class="nav-item flex-c plr-5" routerLink="login" routerLinkActive="active">
       <span>Login</span>
     </a>|
@@ -38,6 +38,13 @@
       <span>Sign Up</span>
     </a>
   </div>
+  <ng-template #logout>
+    <div class="logout">
+      <a class="nav-item flex-c plr-5" (click)="onLogout()">
+        <span>Logout</span>
+      </a>
+    </div>
+  </ng-template>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

@@ -1,1 +1,56 @@
-<p>login works!</p>
+<div *ngIf="!isLoggedIn(); Else logout" class="container">
+  <h1>Login</h1>
+  <form [formGroup]="loginForm" (submit)="onLogin()" class="login-form form">
+    <div>
+      <mat-form-field class="form-field">
+        <mat-label>Username</mat-label>
+        <input matInput type="text" formControlName="username">
+      </mat-form-field>
+        <div *ngIf="loginForm.get('username').invalid
+          && (loginForm.get('username').dirty
+              || loginForm.get('username').touched)
+          && loginForm.get('username').hasError('required')"
+          class="ui negative message">
+          Username is required.
+        </div>
+    </div>
+
+    <div>
+      <mat-form-field class="form-field">
+        <mat-label>Password</mat-label>
+        <input matInput type="text" formControlName="password">
+      </mat-form-field>
+        <div *ngIf="loginForm.get('password').invalid
+          && (loginForm.get('password').dirty
+              || loginForm.get('password').touched)"
+          class="ui negative message">
+          Password is required.
+        </div>
+    </div>
+
+    <h4 *ngIf="loginError">Login failed. Please enter a correct username and password.</h4>
+
+    <div class="btn-group">
+      <button type="submit" matSuffix mat-icon-button aria-label="Clear" [disabled]="loginForm.invalid">
+        <mat-icon>login</mat-icon> Login
+      </button>
+      or
+      <a class="btn" [routerLink]="'/signup'" matSuffix mat-icon-button aria-label="Clear">
+        <mat-icon>person_add</mat-icon> Sign Up new Account
+      </a>
+    </div>
+  </form>
+</div>
+
+<ng-template #logout>
+  <div class="container logout-container form">
+    <p><b>Logged in as:</b> {{ currentUser.user_nicename }}</p>
+
+    <div class="btn-group">
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="onLogout()">
+        <mat-icon>logout</mat-icon> Logout
+      </button>
+    </div>
+
+  </div>
+</ng-template>

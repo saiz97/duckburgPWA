@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from './auth/auth.service';
 import { NotificationService } from './service/notification.service';
 
 @Component({
@@ -8,10 +9,20 @@ import { NotificationService } from './service/notification.service';
 })
 export class AppComponent implements OnInit{
   title = 'DuckburgPWA';
+  loggedIn: boolean = false;
 
-  constructor(private notificationService: NotificationService) {}
+  constructor(private notificationService: NotificationService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.notificationService.permitNotifications();
+    this.authService.isLoggedIn();
+    this.authService.loginStatus.subscribe(status => {
+      console.log("Status: ", status)
+      this.loggedIn = status
+    })
+  }
+
+  onLogout() {
+    this.authService.logout();
   }
 }

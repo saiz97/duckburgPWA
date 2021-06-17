@@ -19,7 +19,7 @@ export class TokenInterceptor implements HttpInterceptor {
       setHeaders: {
         'Content-Type': 'application/json; charset=utf-8',
         'Accept': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+        'Authorization': (sessionStorage.getItem('token')) ?  `Bearer ${sessionStorage.getItem('token')}` : ''
       }
     })
 

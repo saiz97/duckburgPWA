@@ -1,1 +1,56 @@
-<p>signup works!</p>
+<div class="container">
+  <h1>Sign Up</h1>
+  <form [formGroup]="signupForm" (submit)="onSignup()" class="signup-form form">
+    <div>
+      <mat-form-field class="form-field">
+        <mat-label>Username</mat-label>
+        <input matInput type="text" formControlName="username">
+      </mat-form-field>
+        <div *ngIf="signupForm.get('username').invalid
+          && (signupForm.get('username').dirty
+              || signupForm.get('username').touched)
+          && signupForm.get('username').hasError('required')"
+          class="negative message">
+          Username is required.
+        </div>
+    </div>
+
+    <div>
+      <mat-form-field class="form-field">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email">
+      </mat-form-field>
+        <div *ngIf="signupForm.get('email').invalid
+          && (signupForm.get('email').dirty
+              || signupForm.get('email').touched)"
+          class="negative message">
+          Email is required.
+        </div>
+    </div>
+
+    <div>
+      <mat-form-field class="form-field">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password">
+      </mat-form-field>
+        <div *ngIf="signupForm.get('password').invalid
+          && (signupForm.get('password').dirty
+              || signupForm.get('password').touched)"
+          class="negative message">
+          Password is required.
+        </div>
+    </div>
+
+    <h4 *ngIf="signupError">Registration failed. Please recheck your input.</h4>
+
+    <div class="btn-group">
+      <button type="submit" matSuffix mat-icon-button aria-label="Clear" [disabled]="signupForm.invalid">
+        <mat-icon>person_add</mat-icon> Register
+      </button>
+      or
+      <a class="btn" [routerLink]="'/login'" matSuffix mat-icon-button aria-label="Clear">
+        <mat-icon>login</mat-icon> Login
+      </a>
+    </div>
+  </form>
+</div>

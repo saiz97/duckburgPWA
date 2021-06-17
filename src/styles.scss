@@ -136,3 +136,37 @@ button, button[mat-icon-button] {
   padding: 2rem;
   gap: 1rem;
 }
+
+/* FORM */
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  width: 400px;
+
+  .mat-form-field-infix {
+    width: 400px !important;
+  }
+  .btn-group {
+    display: flex;
+    gap: 1rem;
+
+    button, .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+
+      &:hover:not(:disabled) {
+        color: $primary-blue;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+      }
+    }
+  }
+}
