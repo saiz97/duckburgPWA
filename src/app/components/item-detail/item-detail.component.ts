@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
+import { User } from 'src/app/auth/user';
 import { Clothes } from 'src/app/models/clothes';
 import { Comic } from 'src/app/models/comic';
+import { PostComment } from 'src/app/models/comment';
 import { Figure } from 'src/app/models/figure';
 import { ObjectFactory } from 'src/app/models/object.factory';
 import { DataService } from 'src/app/service/data.service';
@@ -17,19 +21,47 @@ export class ItemDetailComponent implements OnInit {
 
   item: any | Comic | Figure | Clothes = null;
   type: string = "";
-  comments: [];
+  comments: PostComment[] = [];
   getSubscription: Subscription;
+
+  commentForm: FormGroup;
+
+  user: User;
 
   constructor(private route: ActivatedRoute,
               private dataService: DataService,
-              private notificationService: NotificationService ) { }
+              private notificationService: NotificationService,
+              private authService: AuthService,
+              private fb: FormBuilder ) { }
 
   ngOnInit(): void {
+    this.commentForm = this.fb.group({
+      comment: ["", [Validators.required]]
+    });
+
     if (history.state.type != null || history.state.type != undefined) {
       this.initObject(history.state.type, history.state.data)
     } else {
       this.getObject();
     }
+
+    if (this.authService.isLoggedIn()) this.user = this.authService.getCurrentUser();
+
+    this.authService.loginStatus.subscribe(status => {
+      if (!status) this.user = null;
+    });
+  }
+
+  onSubmitComment() {
+    this.dataService.addCommentToPost(
+      this.user.id,
+      this.user.user_nicename,
+      this.item.id,
+      this.commentForm.controls['comment'].value).subscribe(response => {
+        this.comments = [];
+        this.getComments();
+        this.commentForm.reset();
+    })
   }
 
   getObject() {
@@ -60,7 +92,23 @@ export class ItemDetailComponent implements OnInit {
           break;
     }
 
+    this.getComments();
     console.log(this.item)
+  }
+
+  getComments() {
+    this.dataService.getCommentsOfPost(this.item.id).subscribe(response => {
+
+      response.forEach(comment => {
+        this.comments.push(ObjectFactory.commentFromObject(comment));
+      });
+
+      console.log("COMMENTS: ", this.comments)
+    })
+  }
+
+  addComment() {
+
   }
 
   addToWishlist() {

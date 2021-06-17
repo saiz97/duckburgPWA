@@ -87,11 +87,15 @@ export class MpComicsComponent implements OnInit, OnDestroy {
       this.comics.set(i, []);
     }
 
+    this.addToMap(page, comics);
+
+    console.info("Comics loaded: ", this.comics);
+  }
+
+  addToMap(page, comics) {
     for (const comic of comics) {
       this.comics.get(+page).push(ObjectFactory.comicFromObject(comic));
     }
-
-    console.info("Comics loaded: ", this.comics);
   }
 
   changePage(selectedPage: number) {
@@ -99,10 +103,10 @@ export class MpComicsComponent implements OnInit, OnDestroy {
     if (this.comics.get(selectedPage).length == 0) {
       this.filters.page = selectedPage.toString();
 
-      console.info("Filters: ", this.filters);
+      // console.info("Filters: ", this.filters);
       this.comicSubscription = this.dataService.getAllComics(this.filters).subscribe((response) => {
         this.dataService.isLoading.next(false);
-        this.comics.set(+response.selected_page, response.data);
+        this.addToMap(+response.selected_page, response.data)
         console.info("Comics loaded: ", this.comics);
       });
     } else {

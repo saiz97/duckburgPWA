@@ -9,12 +9,13 @@ import { catchError, retry } from 'rxjs/operators';
 export class DataService {
 
   private BASE_URL: string = "https://api.s1810456031.student.kwmhgb.at/wp-json/duckburg";
+  private BASE_URL_WP: string = "https://api.s1810456031.student.kwmhgb.at/wp-json/wp/v2";
 
   isLoading = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) { }
 
-  getItemById(id: number) {
+  getItemById(id: number): Observable<any> {
     return this.http.get(`${this.BASE_URL}/itemById`, { headers: new HttpHeaders(), params: { 'id': id.toString() } })
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
@@ -24,7 +25,7 @@ export class DataService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
-  getComicFilterData() {
+  getComicFilterData(): Observable<any> {
     return this.http.get(`${this.BASE_URL}/comics/filters`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
@@ -34,7 +35,7 @@ export class DataService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
-  getFigureFilterData() {
+  getFigureFilterData(): Observable<any> {
     return this.http.get(`${this.BASE_URL}/figures/filters`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
@@ -44,9 +45,34 @@ export class DataService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
-  getClothesFilterData() {
+  getClothesFilterData(): Observable<any> {
     return this.http.get(`${this.BASE_URL}/clothes/filters`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  getItemsByAuthorId(id: number, page: number): Observable<any> {
+    const params = {
+      "id": id.toString(),
+      "page": page.toString(),
+      "num_per_page": "10"
+    };
+
+    return this.http.get(`${this.BASE_URL}/items/author`, { headers: new HttpHeaders(), params: params })
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  getCommentsOfPost(id: number): Observable<any> {
+    return this.http.get(`${this.BASE_URL}/item/comments`, { headers: new HttpHeaders(), params: { 'id': id.toString() } })
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  addCommentToPost(author_id: number, author_name: string, post: number, content: string): Observable<any> {
+    return this.http.post(`${this.BASE_URL_WP}/comments`, {
+        'post': post.toString(),
+        'author': author_id.toString(),
+        'author_name': author_name,
+        'content': content
+    },).pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   private errorHandler(error: Error | any): Observable<any> {

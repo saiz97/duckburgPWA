@@ -87,11 +87,14 @@ export class MpClothesComponent implements OnInit, OnDestroy {
       this.clothes.set(i, []);
     }
 
+    this.addToMap(page, clothes);
+    console.log("Clothes loaded: ", this.clothes);
+  }
+
+  addToMap(page, clothes) {
     for (const cloth of clothes) {
       this.clothes.get(page).push(ObjectFactory.clothesFromObject(cloth));
     }
-
-    console.log("Clothes loaded: ", this.clothes);
   }
 
   changePage(selectedPage: number) {
@@ -102,7 +105,7 @@ export class MpClothesComponent implements OnInit, OnDestroy {
       console.info("Filters: ", this.filters);
       this.clothesSubscription = this.dataService.getAllClothes(this.filters).subscribe((response) => {
         this.dataService.isLoading.next(false);
-        this.clothes.set(+response.selected_page, response.data);
+        this.addToMap(+response.selected_page, response.data);
         console.info("Clothes loaded: ", this.clothes);
       });
     } else {

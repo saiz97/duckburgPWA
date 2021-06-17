@@ -2,6 +2,7 @@ export class Comic {
   constructor(
     public id: number,
     public owner: string,
+    public posttype: string,
     public title: string,
     public description: string,
     public image: string,

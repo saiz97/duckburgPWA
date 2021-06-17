@@ -1,6 +1,7 @@
 import { Clothes } from "./clothes";
 import { Comic } from "./comic";
 import { Figure } from "./figure";
+import { PostComment } from "./comment";
 
 export class ObjectFactory {
   static comicFromObject(rawComic: any): Comic {
@@ -12,6 +13,7 @@ export class ObjectFactory {
     return new Comic(
       +rawComic.id,
       rawComic.owner,
+      rawComic.post_type,
       rawComic.title,
       rawComic.description,
       rawComic.image,
@@ -30,6 +32,7 @@ export class ObjectFactory {
     return new Figure(
       +rawFigure.id,
       rawFigure.owner,
+      rawFigure.post_type,
       rawFigure.title,
       rawFigure.description,
       rawFigure.image,
@@ -42,6 +45,7 @@ export class ObjectFactory {
     return new Clothes(
       +rawClothes.id,
       rawClothes.owner,
+      rawClothes.post_type,
       rawClothes.title,
       rawClothes.description,
       rawClothes.image,
@@ -49,5 +53,17 @@ export class ObjectFactory {
       rawClothes.size,
       +rawClothes.price,
     )
+  }
+
+  static commentFromObject(rawComment: any): PostComment {
+    const date = new Date(rawComment.comment_date);
+    return new PostComment(
+      +rawComment.comment_ID,
+      +rawComment.comment_post_ID,
+      rawComment.comment_author,
+      date,
+      rawComment.comment_content,
+      +rawComment.user_id,
+    );
   }
 }

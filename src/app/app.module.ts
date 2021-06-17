@@ -19,6 +19,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 
 import { MarketplaceComponent } from './components/marketplace/marketplace.component';
 import { AdsComponent } from './components/ads/ads.component';
@@ -72,7 +73,8 @@ registerLocaleData(localeDEAT);
     MatCardModule,
     MatSelectModule,
     HttpClientModule,
-    MatInputModule
+    MatInputModule,
+    MatListModule
   ],
   providers: [
     {

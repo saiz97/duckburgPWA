@@ -17,7 +17,6 @@ export class AppComponent implements OnInit{
     this.notificationService.permitNotifications();
     this.authService.isLoggedIn();
     this.authService.loginStatus.subscribe(status => {
-      console.log("Status: ", status)
       this.loggedIn = status
     })
   }

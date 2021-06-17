@@ -43,8 +43,43 @@
       <button class="buy-item" (click)="buyItem()"><mat-icon>shopping_cart</mat-icon>{{'Gimme that!' | uppercase}}</button>
     </div>
   </div>
-  <div class="comments">
+  <div class="comments-container">
     <h2>Comments</h2>
+
+    <mat-list class="comment-list">
+        <mat-list-item *ngFor="let comment of comments">
+          <mat-icon mat-list-icon>sentiment_satisfied</mat-icon>
+          <h3 mat-line>{{comment.comment_author}} | {{comment.comment_date | date: 'longDate' : 'GMT' : 'en-US' }}</h3>
+          <p mat-line> {{comment.comment_content }} </p>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+    </mat-list>
+
+    <form [formGroup]="commentForm" (submit)="onSubmitComment()" class="comment-form" *ngIf="user;else notLoggedIn">
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Comment:</mat-label>
+          <textarea matInput formControlName="comment"></textarea>
+        </mat-form-field>
+          <div *ngIf="commentForm.get('comment').invalid
+            && (commentForm.get('comment').dirty
+                || commentForm.get('comment').touched)
+            && commentForm.get('comment').hasError('required')"
+            class="ui negative message">
+            Enter a message!
+          </div>
+      </div>
+
+      <button type="submit" matSuffix mat-icon-button aria-label="Clear" [disabled]="commentForm.invalid">
+        <mat-icon>send</mat-icon> Add comment
+      </button>
+    </form>
+
+    <ng-template #notLoggedIn>
+      <div>
+        For adding comments, please log in.
+      </div>
+    </ng-template>
   </div>
 
 

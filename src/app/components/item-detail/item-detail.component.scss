@@ -56,3 +56,20 @@
   display: flex;
   gap: 1rem;
 }
+
+.comments-container {
+
+  .comment-form {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+
+}

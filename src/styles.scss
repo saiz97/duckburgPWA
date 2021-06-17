@@ -170,3 +170,9 @@ button, button[mat-icon-button] {
     }
   }
 }
+
+.comment-form {
+  .mat-form-field-infix {
+    width: 40vw;
+  }
+}

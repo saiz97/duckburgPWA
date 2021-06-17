@@ -1,1 +1,7 @@
-<p>ads-overview works!</p>
+<div class="row">
+  <mat-button-toggle-group #group="matButtonToggleGroup" (change)="changePage(group.value)" *ngIf="items.size > 1">
+    <mat-button-toggle [value]="item.key" *ngFor="let item of items | keyvalue" [class.mat-button-toggle-checked] = "item.key == currentPage">
+      {{item.key}}
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>

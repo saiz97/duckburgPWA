@@ -12,7 +12,9 @@ export interface Response {
 interface Token {
   exp: number;
   data: {
-    id: number,
+    user: {
+      id: number
+    }
   }
 }
 
@@ -61,7 +63,7 @@ export class AuthService {
   }
 
   decodeTokenForId(token: string): number {
-    return +(jwt_decode(token) as Token).data.id;
+    return +(jwt_decode(token) as Token).data.user.id;
   }
 
   logout() {
