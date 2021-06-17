@@ -39,8 +39,8 @@
     </div>
     <div class="button-group flex-c">
       <!--<mat-icon>favorite_border</mat-icon>-->
-      <button class="add-to-wishlist"><mat-icon>favorite</mat-icon>{{'Add to wishlist' | uppercase}}</button>
-      <button class="buy-item"><mat-icon>shopping_cart</mat-icon>{{'Gimme that!' | uppercase}}</button>
+      <button class="add-to-wishlist" (click)="addToWishlist()"><mat-icon>favorite</mat-icon>{{'Add to wishlist' | uppercase}}</button>
+      <button class="buy-item" (click)="buyItem()"><mat-icon>shopping_cart</mat-icon>{{'Gimme that!' | uppercase}}</button>
     </div>
   </div>
   <div class="comments">
