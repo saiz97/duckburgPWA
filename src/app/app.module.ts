@@ -20,6 +20,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { MarketplaceComponent } from './components/marketplace/marketplace.component';
 import { AdsComponent } from './components/ads/ads.component';
@@ -74,7 +78,11 @@ registerLocaleData(localeDEAT);
     MatSelectModule,
     HttpClientModule,
     MatInputModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule,
+    MatRadioModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
   ],
   providers: [
     {

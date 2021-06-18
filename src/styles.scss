@@ -147,32 +147,39 @@ button, button[mat-icon-button] {
 
   width: 400px;
 
-  .mat-form-field-infix {
-    width: 400px !important;
+}
+.btn-group {
+  display: flex;
+  gap: 1rem;
+}
+
+button, .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover:not(:disabled) {
+    color: $primary-blue;
   }
-  .btn-group {
-    display: flex;
-    gap: 1rem;
 
-    button, .btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.5rem;
-
-      &:hover:not(:disabled) {
-        color: $primary-blue;
-      }
-
-      &:disabled {
-        cursor: not-allowed;
-      }
-    }
+  &:disabled {
+    cursor: not-allowed;
   }
 }
 
-.comment-form {
+.mat-form-field-infix {
+  width: 400px !important;
+}
+
+.sm-w {
   .mat-form-field-infix {
-    width: 40vw;
+    width: 350px !important;
+  }
+}
+
+.filter-container, .pagination {
+  .mat-form-field-infix {
+    width: 180px !important;
   }
 }

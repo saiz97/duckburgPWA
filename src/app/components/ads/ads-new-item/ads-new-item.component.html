@@ -1,1 +1,309 @@
-<p>ads-new-item works!</p>
+<h1>Add a new item</h1>
+
+<mat-tab-group animationDuration="0ms">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">auto_stories</mat-icon>
+      Comic
+    </ng-template>
+
+    <div class="form-container create-form">
+      <form [formGroup]="comicForm" (submit)="onCreateComic()" class="comic-form">
+
+        <div class="row">
+          <div>
+            <mat-form-field class="form-field">
+              <mat-label>Title</mat-label>
+              <input matInput type="text" formControlName="title">
+            </mat-form-field>
+              <div *ngIf="comicForm.get('title').invalid
+                && (comicForm.get('title').dirty
+                    || comicForm.get('title').touched)
+                && comicForm.get('title').hasError('required')"
+                class="ui negative message">
+                Title is required.
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <mat-form-field class="form-field">
+              <mat-label>Price</mat-label>
+              <input matInput type="number" min="0" formControlName="price">
+            </mat-form-field>
+            <div *ngIf="comicForm.get('price').invalid
+                && (comicForm.get('price').dirty
+                    || comicForm.get('price').touched)
+                && comicForm.get('price').hasError('required')"
+                class="ui negative message">
+                Title is required.
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <mat-radio-group aria-label="Select a type" formControlName="type">
+              <mat-radio-button value="Paperback">Paperback</mat-radio-button>
+              <mat-radio-button value="Hardback edition">Hardback edition</mat-radio-button>
+            </mat-radio-group>
+            <div *ngIf="comicForm.get('type').invalid
+                && (comicForm.get('type').dirty
+                    || comicForm.get('type').touched)
+                && comicForm.get('type').hasError('required')"
+                class="ui negative message">
+                Type is required.
+              </div>
+          </div>
+        </div>
+
+        <!--Image-->
+
+        <div class="row">
+          <div>
+            <mat-form-field class="sm-w" appearance="fill">
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="description" rows="6"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <mat-form-field class="form-field">
+              <mat-label>Author</mat-label>
+              <input matInput type="text" formControlName="author">
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field class="form-field">
+              <mat-label>Age</mat-label>
+              <input matInput type="number" min="0" formControlName="age">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <mat-form-field class="form-field">
+              <mat-label>ISBN</mat-label>
+              <input matInput type="number" min="0" formControlName="isbn">
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field class="form-field">
+              <mat-label>Pages</mat-label>
+              <input matInput type="number" min="0" formControlName="pages">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <mat-form-field class="form-field">
+              <mat-label>Publisher</mat-label>
+              <input matInput type="text" formControlName="publisher">
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field class="sm-w" color="accent" appearance="fill">
+              <mat-label>Publish Date</mat-label>
+              <input matInput [matDatepicker]="picker2" formControlName="publishdate">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2 color="primary"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <button type="submit" matSuffix mat-icon-button aria-label="Clear" [disabled]="comicForm.invalid">
+          <mat-icon>add</mat-icon> add comic
+        </button>
+      </form>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">directions_walk</mat-icon>
+      Figure
+    </ng-template>
+
+    <div class="form-container">
+      <form [formGroup]="figureForm" (submit)="onCreateFigure()" class="figure-form">
+
+        <div class="row">
+          <div>
+            <mat-form-field class="form-field">
+              <mat-label>Title</mat-label>
+              <input matInput type="text" formControlName="title">
+            </mat-form-field>
+              <div *ngIf="figureForm.get('title').invalid
+                && (figureForm.get('title').dirty
+                    || figureForm.get('title').touched)
+                && figureForm.get('title').hasError('required')"
+                class="ui negative message">
+                Title is required.
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <mat-form-field class="form-field">
+              <mat-label>Price</mat-label>
+              <input matInput type="number" min="0" formControlName="price">
+            </mat-form-field>
+            <div *ngIf="figureForm.get('price').invalid
+                && (figureForm.get('price').dirty
+                    || figureForm.get('price').touched)
+                && figureForm.get('price').hasError('required')"
+                class="ui negative message">
+                Title is required.
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Choose a size</mat-label>
+              <mat-select formControlName="size">
+                <mat-option value="Small">Small</mat-option>
+                <mat-option value="Medium">Medium</mat-option>
+                <mat-option value="Large">Large</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="figureForm.get('size').invalid
+                && (figureForm.get('size').dirty
+                    || figureForm.get('size').touched)
+                && figureForm.get('size').hasError('required')"
+                class="ui negative message">
+                Size is required.
+              </div>
+          </div>
+        </div>
+
+        <!--Image-->
+
+        <div class="row">
+          <div>
+            <mat-form-field class="sm-w" appearance="fill">
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="description" rows="6"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <button type="submit" matSuffix mat-icon-button aria-label="Clear" [disabled]="figureForm.invalid">
+          <mat-icon>add</mat-icon> add figure
+        </button>
+      </form>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">checkroom</mat-icon>
+      Piece of Cloth
+    </ng-template>
+
+    <div class="form-container">
+      <form [formGroup]="clothesForm" (submit)="onCreateClothes()" class="clothes-form">
+
+        <div class="row">
+          <div>
+            <mat-form-field class="form-field">
+              <mat-label>Title</mat-label>
+              <input matInput type="text" formControlName="title">
+            </mat-form-field>
+              <div *ngIf="clothesForm.get('title').invalid
+                && (clothesForm.get('title').dirty
+                    || clothesForm.get('title').touched)
+                && clothesForm.get('title').hasError('required')"
+                class="ui negative message">
+                Title is required.
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <mat-form-field class="form-field">
+              <mat-label>Price</mat-label>
+              <input matInput type="number" min="0" formControlName="price">
+            </mat-form-field>
+            <div *ngIf="clothesForm.get('price').invalid
+                && (clothesForm.get('price').dirty
+                    || clothesForm.get('price').touched)
+                && clothesForm.get('price').hasError('required')"
+                class="ui negative message">
+                Title is required.
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Choose a type</mat-label>
+              <mat-select formControlName="type">
+                <mat-option value="T-Shirt">T-Shirt</mat-option>
+                <mat-option value="Pullover">Pullover</mat-option>
+                <mat-option value="Cap">Cap</mat-option>
+                <mat-option value="Jacket">Jacket</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="clothesForm.get('type').invalid
+                && (clothesForm.get('type').dirty
+                    || clothesForm.get('type').touched)
+                && clothesForm.get('type').hasError('required')"
+                class="ui negative message">
+                Type is required.
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Choose a size</mat-label>
+              <mat-select formControlName="size">
+                <mat-option value="XS">XS</mat-option>
+                <mat-option value="S">S</mat-option>
+                <mat-option value="M">M</mat-option>
+                <mat-option value="L">L</mat-option>
+                <mat-option value="XL">XL</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="clothesForm.get('size').invalid
+                && (clothesForm.get('size').dirty
+                    || clothesForm.get('size').touched)
+                && clothesForm.get('size').hasError('required')"
+                class="ui negative message">
+                Size is required.
+              </div>
+          </div>
+        </div>
+
+        <!--Image-->
+
+        <div class="row">
+          <div>
+            <mat-form-field class="sm-w" appearance="fill">
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="description" rows="6"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <button type="submit" matSuffix mat-icon-button aria-label="Clear" [disabled]="clothesForm.invalid">
+          <mat-icon>add</mat-icon> add piece of cloth
+        </button>
+      </form>
+    </div>
+  </mat-tab>
+</mat-tab-group>

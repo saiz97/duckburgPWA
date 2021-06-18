@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth/auth.service';
+import { User } from 'src/app/auth/user';
 
 @Component({
   selector: 'app-ads',
@@ -8,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 export class AdsComponent implements OnInit {
   selectedNavItem: string = 'overview';
 
-  constructor() { }
+  user: User = null;
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.user = this.authService.getCurrentUser();
   }
 
 }

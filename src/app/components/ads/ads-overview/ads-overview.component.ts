@@ -1,10 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user';
-import { Clothes } from 'src/app/models/clothes';
-import { Comic } from 'src/app/models/comic';
-import { Figure } from 'src/app/models/figure';
 import { ObjectFactory } from 'src/app/models/object.factory';
 import { DataService } from 'src/app/service/data.service';
 
@@ -22,9 +18,9 @@ export class AdsOverviewComponent implements OnInit {
 
   items: Map<number, any[]> = new Map();
 
-  user: User;
+  @Input() user: User;
 
-  constructor(private dataService: DataService, private authService: AuthService) { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
     this.loadingSubscription = this.dataService.isLoading.subscribe((state) => this.isLoading = state);
@@ -33,7 +29,6 @@ export class AdsOverviewComponent implements OnInit {
 
   initItems() {
     this.currentPage = 1;
-    this.user = this.authService.getCurrentUser();
     this.dataService.getItemsByAuthorId(this.user.id, this.currentPage, this.itemsPerPage).subscribe(response => {
       this.dataService.isLoading.next(false);
       this.initMap(response.max_pages, response.selected_page, response.data);
@@ -42,7 +37,7 @@ export class AdsOverviewComponent implements OnInit {
 
   initMap(pages: number, page: number, items) {
     this.items = new Map();
-    
+
     for (let i = 1; i <= pages; i++) {
       this.items.set(i, []);
     }

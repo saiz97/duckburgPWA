@@ -2,6 +2,9 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { Clothes } from '../models/clothes';
+import { Comic } from '../models/comic';
+import { Figure } from '../models/figure';
 
 @Injectable({
   providedIn: 'root'
@@ -73,6 +76,21 @@ export class DataService {
         'author_name': author_name,
         'content': content
     },).pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  postNewItem(authorId: number, item: any, type: string): Observable<any> {
+    let post = {
+      author: authorId.toString(),
+      title: item.title,
+      type: "duckburg_" + type,
+      status: "publish",
+      comments_status: "open",
+      fields: {}
+    }
+
+    post.fields = item;
+
+    return this.http.post(`${this.BASE_URL_WP}/duckburg_${type}`, post).pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   private errorHandler(error: Error | any): Observable<any> {

@@ -57,7 +57,7 @@
 
     <form [formGroup]="commentForm" (submit)="onSubmitComment()" class="comment-form" *ngIf="user;else notLoggedIn">
       <div>
-        <mat-form-field appearance="fill">
+        <mat-form-field class="sm-w" appearance="fill">
           <mat-label>Comment:</mat-label>
           <textarea matInput formControlName="comment"></textarea>
         </mat-form-field>

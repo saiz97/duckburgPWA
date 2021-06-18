@@ -7,7 +7,7 @@
     </div>
   </mat-drawer>
   <mat-drawer-content>
-    <div *ngIf="selectedNavItem == 'overview'"><app-ads-overview></app-ads-overview></div>
-    <div *ngIf="selectedNavItem == 'new'"><app-ads-new-item></app-ads-new-item></div>
+    <div *ngIf="selectedNavItem == 'overview'"><app-ads-overview [user]="user"></app-ads-overview></div>
+    <div *ngIf="selectedNavItem == 'new'"><app-ads-new-item [user]="user"></app-ads-new-item></div>
   </mat-drawer-content>
 </mat-drawer-container>
