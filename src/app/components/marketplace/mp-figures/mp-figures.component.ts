@@ -54,7 +54,6 @@ export class MpFiguresComponent implements OnInit, OnDestroy {
   }
 
   getFigures(filters = {}) {
-    this.figures = new Map();
     console.log("FILTERS: ", filters);
     this.figureSubscription = this.dataService.getAllFigures(filters).subscribe((response) => {
       this.initFiguresMap(response.max_pages, response.selected_page, response.data);
@@ -79,6 +78,8 @@ export class MpFiguresComponent implements OnInit, OnDestroy {
   }
 
   initFiguresMap(pages, page, figures) {
+    this.figures = new Map();
+    
     for (let i = 1; i <= pages; i++) {
       this.figures.set(i, []);
     }

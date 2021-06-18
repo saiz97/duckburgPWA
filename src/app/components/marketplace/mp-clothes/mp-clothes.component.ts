@@ -56,7 +56,6 @@ export class MpClothesComponent implements OnInit, OnDestroy {
   }
 
   getClothes(filters = {}) {
-    this.clothes = new Map();
     console.log("FILTERS: ", filters);
     this.clothesSubscription = this.dataService.getAllClothes(filters).subscribe((response) => {
       this.initClothesMap(response.max_pages, response.selected_page, response.data);
@@ -83,6 +82,8 @@ export class MpClothesComponent implements OnInit, OnDestroy {
   }
 
   initClothesMap(pages, page, clothes) {
+    this.clothes = new Map();
+
     for (let i = 1; i <= pages; i++) {
       this.clothes.set(i, []);
     }

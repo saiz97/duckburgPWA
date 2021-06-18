@@ -56,7 +56,6 @@ export class MpComicsComponent implements OnInit, OnDestroy {
   }
 
   getComics(filters = {}) {
-    this.comics = new Map();
     console.log("FILTERS: ", filters);
     this.comicSubscription = this.dataService.getAllComics(filters).subscribe((response) => {
       this.initComicMap(response.max_pages, response.selected_page, response.data);
@@ -83,6 +82,8 @@ export class MpComicsComponent implements OnInit, OnDestroy {
   }
 
   initComicMap(pages: number, page: number, comics) {
+    this.comics = new Map();
+
     for (let i = 1; i <= pages; i++) {
       this.comics.set(i, []);
     }
