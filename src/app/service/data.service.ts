@@ -50,11 +50,11 @@ export class DataService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
-  getItemsByAuthorId(id: number, page: number): Observable<any> {
+  getItemsByAuthorId(id: number, page: number, itemsPerPage: string): Observable<any> {
     const params = {
       "id": id.toString(),
       "page": page.toString(),
-      "num_per_page": "10"
+      "num_per_page": (itemsPerPage != '' ? itemsPerPage : '10')
     };
 
     return this.http.get(`${this.BASE_URL}/items/author`, { headers: new HttpHeaders(), params: params })

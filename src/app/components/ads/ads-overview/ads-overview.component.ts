@@ -16,6 +16,7 @@ import { DataService } from 'src/app/service/data.service';
 export class AdsOverviewComponent implements OnInit {
   isLoading: boolean = true;
   currentPage: number = 1;
+  itemsPerPage: string = "5";
 
   loadingSubscription: Subscription;
 
@@ -33,26 +34,27 @@ export class AdsOverviewComponent implements OnInit {
   initItems() {
     this.currentPage = 1;
     this.user = this.authService.getCurrentUser();
-    this.dataService.getItemsByAuthorId(this.user.id, this.currentPage).subscribe(response => {
-      console.log("=== ", response)
+    this.dataService.getItemsByAuthorId(this.user.id, this.currentPage, this.itemsPerPage).subscribe(response => {
+      this.dataService.isLoading.next(false);
       this.initMap(response.max_pages, response.selected_page, response.data);
     })
   }
 
   initMap(pages: number, page: number, items) {
+    this.items = new Map();
+    
     for (let i = 1; i <= pages; i++) {
       this.items.set(i, []);
     }
 
-    for (const item of items) {
-      this.addItemToMap(page, item);
-    }
+    this.addItemToMap(page, items);
 
     console.info("Items loaded: ", this.items);
   }
 
-  addItemToMap(page:number, item: any) {
-    switch (item.post_type) {
+  addItemToMap(page:number, items: any) {
+    for (const item of items) {
+      switch (item.post_type) {
         case "comic":
           this.items.get(+page).push(ObjectFactory.comicFromObject(item));
           break;
@@ -65,23 +67,34 @@ export class AdsOverviewComponent implements OnInit {
         default:
           break;
       }
+    }
   }
 
   changePage(selectedPage: number) {
     this.currentPage = selectedPage;
     if (this.items.get(selectedPage).length == 0) {
 
-      this.dataService.getItemsByAuthorId(this.user.id, this.currentPage).subscribe((response) => {
+      this.dataService.getItemsByAuthorId(this.user.id, this.currentPage, this.itemsPerPage).subscribe((response) => {
         this.dataService.isLoading.next(false);
-        response.data.forEach(item => {
-          this.addItemToMap(+response.selected_page, item);
-        });
-        console.log("*** ", this.items);
+        this.addItemToMap(+response.selected_page, response.data);
+        console.log("My Items loaded.", this.items);
       });
     } else {
       // data already loaded, do nothing
       console.info("Content already loaded: ", this.items.get(selectedPage));
     }
+  }
+
+  onChangeItemsPerPage() {
+    this.initItems();
+  }
+
+  displayedItems() {
+    return this.items.get(this.currentPage);
+  }
+
+  checkDataForPageExists(): boolean {
+    return this.items.get(this.currentPage).length != 0;
   }
 
 }
