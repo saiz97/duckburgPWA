@@ -19,12 +19,12 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   getItemById(id: number): Observable<any> {
-    return this.http.get(`${this.BASE_URL}/itemById`, { headers: new HttpHeaders(), params: { 'id': id.toString() } })
+    return this.http.get(`${this.BASE_URL}/itemById`, { params: { 'id': id.toString() } })
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   getAllComics(params: { [index: string]: string } = {}): Observable<any> {
-    return this.http.get(`${this.BASE_URL}/comics`, { headers: new HttpHeaders(), params: params })
+    return this.http.get(`${this.BASE_URL}/comics`, { params: params })
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
@@ -34,7 +34,7 @@ export class DataService {
   }
 
   getAllFigures(params: { [index: string]: string } = {}): Observable<any> {
-    return this.http.get(`${this.BASE_URL}/figures`, { headers: new HttpHeaders(), params: params })
+    return this.http.get(`${this.BASE_URL}/figures`, { params: params })
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
@@ -44,7 +44,7 @@ export class DataService {
   }
 
   getAllClothes(params: { [index: string]: string } = {}): Observable<any> {
-    return this.http.get(`${this.BASE_URL}/clothes`, { headers: new HttpHeaders(), params: params })
+    return this.http.get(`${this.BASE_URL}/clothes`, { params: params })
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
@@ -60,12 +60,12 @@ export class DataService {
       "num_per_page": (itemsPerPage != '' ? itemsPerPage : '10')
     };
 
-    return this.http.get(`${this.BASE_URL}/items/author`, { headers: new HttpHeaders(), params: params })
+    return this.http.get(`${this.BASE_URL}/items/author`, { params: params })
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   getCommentsOfPost(id: number): Observable<any> {
-    return this.http.get(`${this.BASE_URL}/item/comments`, { headers: new HttpHeaders(), params: { 'id': id.toString() } })
+    return this.http.get(`${this.BASE_URL}/item/comments`, { params: { 'id': id.toString() } })
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
@@ -114,6 +114,10 @@ export class DataService {
       headers: headers
     }).pipe(retry(3)).pipe(catchError(this.errorHandler));
 
+  }
+
+  deleteItem(id: number): Observable<any> {
+    return this.http.delete(`${this.BASE_URL}/item`, {params: { 'id': id.toString() }}).pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   private errorHandler(error: Error | any): Observable<any> {

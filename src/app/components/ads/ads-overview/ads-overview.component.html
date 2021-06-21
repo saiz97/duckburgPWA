@@ -26,6 +26,7 @@
     <a routerLink="item/{{item.id}}" [state]="{ data: item, type: item.posttype }" class="card-link" *ngFor="let item of displayedItems()">
       <mat-card class="card item">
         <img mat-card-image [src]="item.image" alt="Image of {{item.title}}">
+        <button class="btn btn-delete" (click)="deleteItem(item.id); $event.preventDefault();$event.stopPropagation()"><mat-icon>delete</mat-icon></button>
         <mat-card-actions>
           <h3><mat-icon>euro</mat-icon> {{item.price}}</h3>
           <button><mat-icon>shopping_cart</mat-icon></button>

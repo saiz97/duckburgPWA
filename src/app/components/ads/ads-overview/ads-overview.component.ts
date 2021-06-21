@@ -92,4 +92,14 @@ export class AdsOverviewComponent implements OnInit {
     return this.items.get(this.currentPage).length != 0;
   }
 
+  deleteItem(id: number) {
+
+    if (confirm("Do you really want to delete this item?")) {
+      this.dataService.deleteItem(id).subscribe(resposne => {
+        console.warn("Item deleted successfully.");
+        this.initItems();
+      })
+    }
+  }
+
 }
