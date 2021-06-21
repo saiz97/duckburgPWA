@@ -64,6 +64,15 @@ export class DataService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
+  getWishlist(currentPage: number, itemsPerPage: number, wishlist: number[]): Observable<any> {
+    return this.http.post(`${this.BASE_URL}/wishlist`, {
+      "paged": currentPage,
+      "posts_per_page": itemsPerPage,
+      "data": wishlist
+    })
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
   getCommentsOfPost(id: number): Observable<any> {
     return this.http.get(`${this.BASE_URL}/item/comments`, { params: { 'id': id.toString() } })
       .pipe(retry(3)).pipe(catchError(this.errorHandler));

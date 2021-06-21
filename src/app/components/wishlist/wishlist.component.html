@@ -1,1 +1,45 @@
-<p>wishlist works!</p>
+<div class="container">
+  <h1>My Wishlist</h1>
+  <div class="pagination">
+    <mat-form-field appearance="fill">
+      <mat-label>Items per Page</mat-label>
+      <mat-select [(value)]="itemsPerPage" (selectionChange)="onChangeItemsPerPage()">
+        <mat-option value="5">5</mat-option>
+        <mat-option value="10">10</mat-option>
+        <mat-option value="15">15</mat-option>
+        <mat-option value="20">20</mat-option>
+        <mat-option value="25">25</mat-option>
+        <mat-option value="30">30</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-button-toggle-group #group="matButtonToggleGroup" (change)="changePage(group.value)" *ngIf="items.size > 1">
+      <mat-button-toggle [value]="item.key" *ngFor="let item of items | keyvalue" [class.mat-button-toggle-checked] = "item.key == currentPage">
+        {{item.key}}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <app-loader *ngIf="isLoading;else cardcontainer"></app-loader>
+
+  <ng-template #cardcontainer>
+    <div class="card-container" *ngIf="checkDataForPageExists();else nodata">
+      <a routerLink="item/{{item.id}}" [state]="{ data: item, type: item.posttype }" class="card-link" *ngFor="let item of displayedItems()">
+        <mat-card class="card item">
+          <img mat-card-image [src]="item.image" alt="Image of {{item.title}}">
+          <button class="btn btn-remove" (click)="removeFromWishlist(item.id); $event.preventDefault();$event.stopPropagation()"><mat-icon>delete</mat-icon></button>
+          <mat-card-actions>
+            <h3><mat-icon>euro</mat-icon> {{item.price}}</h3>
+            <button><mat-icon>shopping_cart</mat-icon></button>
+          </mat-card-actions>
+        </mat-card>
+      </a>
+    </div>
+  </ng-template>
+
+  <ng-template #nodata>
+    <h3>No data for this page.</h3>
+  </ng-template>
+</div>
+
+

@@ -1,0 +1,16 @@
+@import '_colors';
+
+.btn-remove{
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  padding: 0.5rem;
+  background-color: $background-white-white;
+
+  border-bottom-left-radius: 30%;
+}
+
+.container {
+  padding: 2rem;
+}

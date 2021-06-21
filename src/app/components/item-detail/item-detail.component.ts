@@ -111,8 +111,29 @@ export class ItemDetailComponent implements OnInit {
 
   }
 
+  isWishlistItem(): boolean {
+    return JSON.parse(sessionStorage.getItem('wishlist')).includes(this.item.id);
+  }
+
   addToWishlist() {
-    this.notificationService.sendMessage("Added to wishlist!", "U will buy it anyway...", "https://i.pinimg.com/originals/4e/62/17/4e6217e3b10352ad2f0de6f07b667006.png")
+    let wishlist: number[];
+
+    if (sessionStorage.getItem('wishlist')) wishlist = JSON.parse(sessionStorage.getItem('wishlist'));
+    else wishlist = [];
+
+
+    if (!wishlist.includes(this.item.id)) {
+      wishlist.push(this.item.id);
+      this.notificationService.sendMessage("Added to wishlist!", "Good boy.", "https://i.pinimg.com/originals/4e/62/17/4e6217e3b10352ad2f0de6f07b667006.png")
+    }
+    else {
+      wishlist.splice(wishlist.indexOf(this.item.id), 1);
+      this.notificationService.sendMessage("Removed from wishlist!", "U dog.", "https://i.pinimg.com/originals/4e/62/17/4e6217e3b10352ad2f0de6f07b667006.png")
+    }
+
+    console.log("== ", wishlist);
+    sessionStorage.setItem('wishlist', JSON.stringify(wishlist));
+
   }
 
   buyItem() {
