@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     const val = this.loginForm.value;
-    console.log("Logging in with...", val.username, val.password);
 
     if(val.username && val.password) {
       this.authService.login(val.username, val.password).subscribe(response => {
@@ -53,6 +52,10 @@ export class LoginComponent implements OnInit {
         this.loginError = false;
         this.authService.loginStatus.next(true);
         this.router.navigate(['ads']);
+      }, (err) => {
+        console.error("Login failed.", err)
+        this.loginForm.reset();
+        this.loginError = true;
       });
     } else {
       console.error("Login failed.")

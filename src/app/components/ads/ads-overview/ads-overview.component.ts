@@ -43,8 +43,6 @@ export class AdsOverviewComponent implements OnInit {
     }
 
     this.addItemToMap(page, items);
-
-    console.info("Items loaded: ", this.items);
   }
 
   addItemToMap(page:number, items: any) {
@@ -63,6 +61,8 @@ export class AdsOverviewComponent implements OnInit {
           break;
       }
     }
+
+    console.info("Items loaded: ", this.items);
   }
 
   changePage(selectedPage: number) {
@@ -72,7 +72,6 @@ export class AdsOverviewComponent implements OnInit {
       this.dataService.getItemsByAuthorId(this.user.id, this.currentPage, this.itemsPerPage).subscribe((response) => {
         this.dataService.isLoading.next(false);
         this.addItemToMap(+response.selected_page, response.data);
-        console.log("My Items loaded.", this.items);
       });
     } else {
       // data already loaded, do nothing
@@ -89,14 +88,14 @@ export class AdsOverviewComponent implements OnInit {
   }
 
   checkDataForPageExists(): boolean {
-    return this.items.get(this.currentPage).length != 0;
+    if (this.items.size == 0) return false;
+    return (this.items.get(this.currentPage).length != 0);
   }
 
   deleteItem(id: number) {
-
     if (confirm("Do you really want to delete this item?")) {
       this.dataService.deleteItem(id).subscribe(resposne => {
-        console.warn("Item deleted successfully.");
+        console.info("Item deleted successfully.");
         this.initItems();
       })
     }

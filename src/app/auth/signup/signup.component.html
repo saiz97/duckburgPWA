@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <h4 *ngIf="signupError">Registration failed. Please recheck your input.</h4>
+    <h4 *ngIf="signupError">Registration failed. Username or email already in use.</h4>
 
     <div class="btn-group">
       <button type="submit" matSuffix mat-icon-button aria-label="Clear" [disabled]="signupForm.invalid">

@@ -28,7 +28,6 @@ export class SignupComponent implements OnInit {
 
   onSignup() {
     const val = this.signupForm.value;
-    console.log("Signup with ...", val.username, val.email, val.password)
 
     if (val.username && val.email && val.password) {
       this.authService.signup(val.username, val.email, val.password).subscribe(response => {
@@ -46,9 +45,13 @@ export class SignupComponent implements OnInit {
           this.authService.loginStatus.next(true);
           this.router.navigate(['ads']);
         });
+      }, (err) => {
+        console.error("Signup Error: ", err);
+        this.signupForm.reset();
+        this.signupError = true;
       })
     } else {
-      console.error("Login failed.")
+      console.error("Signup failed.")
       this.signupForm.reset();
       this.signupError = true;
     }

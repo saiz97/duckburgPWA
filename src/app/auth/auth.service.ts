@@ -43,8 +43,7 @@ export class AuthService {
     return this.http.post(`${this.BASE_URL}/register`, {
       'username': username,
       'email': email,
-      'password': password,
-      'role': "author"
+      'password': password
     }).pipe(catchError(this.errorHandler));
   }
 
@@ -68,7 +67,7 @@ export class AuthService {
 
   logout() {
     sessionStorage.clear();
-    console.log("logged out");
+    console.info("logged out");
     this.loginStatus.next(false);
   }
 
@@ -80,7 +79,7 @@ export class AuthService {
       expirationDate.setUTCSeconds(decodedToken.exp);
 
       if (expirationDate < new Date()) {
-        console.log("token expired");
+        console.info("token expired");
         this.logout();
         return false;
       } else {
