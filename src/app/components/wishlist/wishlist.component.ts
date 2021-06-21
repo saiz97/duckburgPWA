@@ -86,7 +86,8 @@ export class WishlistComponent implements OnInit {
   }
 
   checkDataForPageExists(): boolean {
-    return this.items.get(this.currentPage).length != 0;
+    if (this.items.size == 0) return false;
+    return (this.items.get(this.currentPage).length != 0);
   }
 
   removeFromWishlist(id: number) {

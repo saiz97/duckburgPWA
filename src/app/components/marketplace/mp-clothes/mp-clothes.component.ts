@@ -117,7 +117,8 @@ export class MpClothesComponent implements OnInit, OnDestroy {
   }
 
   checkDataForPageExists(): boolean {
-    return this.clothes.get(this.currentPage).length != 0;
+    if (this.clothes.size == 0) return false;
+    return (this.clothes.get(this.currentPage).length != 0);
   }
 
   ngOnDestroy(): void {

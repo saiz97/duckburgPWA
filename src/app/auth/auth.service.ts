@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, retry, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { User } from './user';
 
 export interface Response {
@@ -28,7 +29,7 @@ export class AuthService {
   adminStatus: boolean = false;
   loginStatus = new BehaviorSubject(false);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   login (username: string, password: string): Observable<any> {
     return this.http.post(`${this.BASE_URL_TOKEN}`, {}, {
@@ -69,6 +70,8 @@ export class AuthService {
     sessionStorage.clear();
     console.info("logged out");
     this.loginStatus.next(false);
+
+    if (this.router.url.includes('ads')) this.router.navigate(['marketplace'])
   }
 
   isLoggedIn() {

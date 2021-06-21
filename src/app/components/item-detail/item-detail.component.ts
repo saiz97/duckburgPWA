@@ -109,7 +109,7 @@ export class ItemDetailComponent implements OnInit {
   }
 
   isWishlistItem(): boolean {
-    return JSON.parse(sessionStorage.getItem('wishlist')).includes(this.item.id);
+    return (sessionStorage.getItem('wishlist') != null) ? JSON.parse(sessionStorage.getItem('wishlist')).includes(this.item.id) : false;
   }
 
   addToWishlist() {

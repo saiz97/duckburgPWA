@@ -7,15 +7,17 @@ import { ItemDetailComponent } from './components/item-detail/item-detail.compon
 import { MarketplaceComponent } from './components/marketplace/marketplace.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
 
+import { AuthGuard } from './auth/auth.guard';
+
 const routes: Routes = [
   { path: '', redirectTo: 'marketplace', pathMatch: 'full' },
   { path: 'marketplace', children: [
     { path: '', component: MarketplaceComponent },
     { path: 'item/:id', component: ItemDetailComponent }
   ]},
-  { path: 'ads', children: [
-    { path: '', component: AdsComponent },
-    { path: 'item/:id', component: ItemDetailComponent }
+  { path: 'ads', canActivate: [AuthGuard], children: [
+    { path: '', component: AdsComponent, canActivate: [AuthGuard] },
+    { path: 'item/:id', component: ItemDetailComponent, canActivate: [AuthGuard] }
   ]},
   { path: 'wishlist', children: [
     { path: '', component: WishlistComponent },

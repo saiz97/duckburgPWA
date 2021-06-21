@@ -1,5 +1,19 @@
 @import '_colors';
 
+.pagination {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+
+  mat-button-toggle-group {
+    margin-top: 0.5rem;
+  }
+}
+
+.card {
+  position: relative;
+}
+
 .btn-remove{
   position: absolute;
   top: 0;

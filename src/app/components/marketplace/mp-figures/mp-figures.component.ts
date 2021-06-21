@@ -113,7 +113,8 @@ export class MpFiguresComponent implements OnInit, OnDestroy {
   }
 
   checkDataForPageExists(): boolean {
-    return this.figures.get(this.currentPage).length != 0;
+    if (this.figures.size == 0) return false;
+    return (this.figures.get(this.currentPage).length != 0);
   }
 
   ngOnDestroy(): void {
