@@ -67,7 +67,8 @@ export class AuthService {
   }
 
   logout() {
-    sessionStorage.clear();
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
     console.info("logged out");
     this.loginStatus.next(false);
 

@@ -31,7 +31,8 @@ export class WishlistComponent implements OnInit {
 
     this.dataService.getWishlist(+this.currentPage, +this.itemsPerPage, this.wishlist).subscribe((response) => {
         this.dataService.isLoading.next(false);
-        this.initMap(response.max_pages, response.selected_page, response.data);
+        if (response != null) this.initMap(response.max_pages, response.selected_page, response.data);
+        else this.items = new Map();
       });
   }
 
