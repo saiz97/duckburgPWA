@@ -18,7 +18,7 @@ export class NotificationService {
   permitNotifications() {
     Notification.requestPermission().then((result) => {
     if(result == 'granted')
-      console.warn("PUSH ME DOWN :)")
+      console.warn("Notifications permitted.")
     });
   }
 }

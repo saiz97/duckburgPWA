@@ -54,7 +54,6 @@ export class MpFiguresComponent implements OnInit, OnDestroy {
   }
 
   getFigures(filters = {}) {
-    console.log("FILTERS: ", filters);
     this.figureSubscription = this.dataService.getAllFigures(filters).subscribe((response) => {
       this.initFiguresMap(response.max_pages, response.selected_page, response.data);
       this.dataService.isLoading.next(false);
@@ -79,20 +78,19 @@ export class MpFiguresComponent implements OnInit, OnDestroy {
 
   initFiguresMap(pages, page, figures) {
     this.figures = new Map();
-    
+
     for (let i = 1; i <= pages; i++) {
       this.figures.set(i, []);
     }
 
     this.addToMap(page, figures);
-
-    console.log("Figures loaded: ", this.figures);
   }
 
   addToMap(page, figures) {
     for (const figure of figures) {
       this.figures.get(page).push(ObjectFactory.figureFromObject(figure));
     }
+    console.log("Figures loaded: ", this.figures);
   }
 
   changePage(selectedPage: number) {
@@ -100,11 +98,9 @@ export class MpFiguresComponent implements OnInit, OnDestroy {
     if (this.figures.get(selectedPage).length == 0) {
       this.filters.page = selectedPage.toString();
 
-      // console.info("Filters: ", this.filters);
       this.figureSubscription = this.dataService.getAllFigures(this.filters).subscribe((response) => {
         this.dataService.isLoading.next(false);
         this.addToMap(+response.selected_page, response.data);
-        console.info("Figures loaded: ", this.figures);
       });
     } else {
       // data already loaded, do nothing

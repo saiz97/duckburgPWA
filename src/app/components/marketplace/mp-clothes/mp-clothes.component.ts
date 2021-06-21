@@ -56,7 +56,6 @@ export class MpClothesComponent implements OnInit, OnDestroy {
   }
 
   getClothes(filters = {}) {
-    console.log("FILTERS: ", filters);
     this.clothesSubscription = this.dataService.getAllClothes(filters).subscribe((response) => {
       this.initClothesMap(response.max_pages, response.selected_page, response.data);
       this.dataService.isLoading.next(false);
@@ -89,13 +88,13 @@ export class MpClothesComponent implements OnInit, OnDestroy {
     }
 
     this.addToMap(page, clothes);
-    console.log("Clothes loaded: ", this.clothes);
   }
 
   addToMap(page, clothes) {
     for (const cloth of clothes) {
       this.clothes.get(page).push(ObjectFactory.clothesFromObject(cloth));
     }
+    console.log("Clothes loaded: ", this.clothes);
   }
 
   changePage(selectedPage: number) {
@@ -103,11 +102,9 @@ export class MpClothesComponent implements OnInit, OnDestroy {
     if (this.clothes.get(selectedPage).length == 0) {
       this.filters.page = selectedPage.toString();
 
-      console.info("Filters: ", this.filters);
       this.clothesSubscription = this.dataService.getAllClothes(this.filters).subscribe((response) => {
         this.dataService.isLoading.next(false);
         this.addToMap(+response.selected_page, response.data);
-        console.info("Clothes loaded: ", this.clothes);
       });
     } else {
       // data already loaded, do nothing

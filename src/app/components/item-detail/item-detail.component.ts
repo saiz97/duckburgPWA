@@ -93,7 +93,6 @@ export class ItemDetailComponent implements OnInit {
     }
 
     this.getComments();
-    console.log(this.item)
   }
 
   getComments() {
@@ -102,8 +101,6 @@ export class ItemDetailComponent implements OnInit {
       response.forEach(comment => {
         this.comments.push(ObjectFactory.commentFromObject(comment));
       });
-
-      console.log("COMMENTS: ", this.comments)
     })
   }
 
@@ -131,9 +128,7 @@ export class ItemDetailComponent implements OnInit {
       this.notificationService.sendMessage("Removed from wishlist!", "U dog.", "https://i.pinimg.com/originals/4e/62/17/4e6217e3b10352ad2f0de6f07b667006.png")
     }
 
-    console.log("== ", wishlist);
     sessionStorage.setItem('wishlist', JSON.stringify(wishlist));
-
   }
 
   buyItem() {

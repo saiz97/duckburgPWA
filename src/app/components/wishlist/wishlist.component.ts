@@ -43,8 +43,6 @@ export class WishlistComponent implements OnInit {
     }
 
     this.addItemToMap(page, items);
-
-    console.info("Items loaded: ", this.items);
   }
 
   addItemToMap(page:number, items: any) {
@@ -63,6 +61,7 @@ export class WishlistComponent implements OnInit {
           break;
       }
     }
+    console.info("Items loaded: ", this.items);
   }
 
   changePage(selectedPage: number) {
@@ -71,7 +70,6 @@ export class WishlistComponent implements OnInit {
       this.dataService.getWishlist(+this.currentPage, +this.itemsPerPage, this.wishlist).subscribe((response) => {
         this.dataService.isLoading.next(false);
         this.addItemToMap(+response.selected_page, response.data);
-        console.log("My Items loaded.", this.items);
       });
     } else {
       // data already loaded, do nothing
