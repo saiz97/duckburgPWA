@@ -18,4 +18,8 @@ export class AdsComponent implements OnInit {
     this.user = this.authService.getCurrentUser();
   }
 
+  incomingEvent(event) {
+    this.selectedNavItem = event;
+  }
+
 }

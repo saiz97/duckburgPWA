@@ -58,7 +58,22 @@
           </div>
         </div>
 
-        <!--Image-->
+        <div class="row">
+          <div class="image-field">
+            <div>
+              <label for="comic-img">Select an image</label>
+              <input id="comic-img" type="file" formControlName="image"
+                accept="image/png, image/jpeg"/>
+            </div>
+            <div *ngIf="comicForm.get('image').invalid
+                && (comicForm.get('image').dirty
+                    || comicForm.get('image').touched)
+                && comicForm.get('image').hasError('required')"
+                class="ui negative message">
+                Type is required.
+              </div>
+          </div>
+        </div>
 
         <div class="row">
           <div>
@@ -187,7 +202,22 @@
           </div>
         </div>
 
-        <!--Image-->
+        <div class="row">
+          <div class="image-field">
+            <div>
+              <label for="figure-img">Select an image</label>
+              <input id="figure-img" type="file" formControlName="image"
+                accept="image/png, image/jpeg"/>
+            </div>
+            <div *ngIf="figureForm.get('image').invalid
+                && (figureForm.get('image').dirty
+                    || figureForm.get('image').touched)
+                && figureForm.get('image').hasError('required')"
+                class="ui negative message">
+                Type is required.
+              </div>
+          </div>
+        </div>
 
         <div class="row">
           <div>
@@ -289,7 +319,22 @@
           </div>
         </div>
 
-        <!--Image-->
+        <div class="row">
+          <div class="image-field">
+            <div>
+              <label for="clothes-img">Select an image</label>
+              <input id="clothes-img" type="file" formControlName="image"
+                accept="image/png, image/jpeg"/>
+            </div>
+            <div *ngIf="clothesForm.get('image').invalid
+                && (clothesForm.get('image').dirty
+                    || clothesForm.get('image').touched)
+                && clothesForm.get('image').hasError('required')"
+                class="ui negative message">
+                Type is required.
+              </div>
+          </div>
+        </div>
 
         <div class="row">
           <div>

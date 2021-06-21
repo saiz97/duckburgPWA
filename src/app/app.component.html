@@ -21,7 +21,7 @@
       <mat-icon>home</mat-icon>
       <span>Marketplace</span>
     </a>
-    <a class="nav-item flex-c plr-5" routerLink="ads" routerLinkActive="active">
+    <a class="nav-item flex-c plr-5" routerLink="ads" routerLinkActive="active" *ngIf="loggedIn">
       <mat-icon>gavel</mat-icon>
       <span>My Items</span>
     </a>

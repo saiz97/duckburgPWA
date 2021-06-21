@@ -7,7 +7,7 @@ export class ObjectFactory {
   static comicFromObject(rawComic: any): Comic {
     const date = (rawComic.publish_date != '' && rawComic.publish_date.toString().includes('/'))
         ? new Date(rawComic.publish_date.split('/').reverse().join('-'))
-        : new Date(rawComic.publish_date);
+        : ((rawComic.publish_date != '') ? new Date(rawComic.publish_date) : '');
 
     const date2: Date = null;
     return new Comic(

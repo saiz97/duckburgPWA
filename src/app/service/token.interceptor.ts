@@ -15,9 +15,14 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     this.dataService.isLoading.next(true);
+
+    let contenttype = (request.headers.get('Content-Type') != null && request.headers.get('Content-Type') != '')
+          ? request.headers.get('Content-Type')
+          : 'application/json; charset=utf-8';
+
     request = request.clone({
       setHeaders: {
-        'Content-Type': 'application/json; charset=utf-8',
+        'Content-Type': contenttype,
         'Accept': 'application/json',
         'Authorization': (sessionStorage.getItem('token')) ?  `Bearer ${sessionStorage.getItem('token')}` : ''
       }

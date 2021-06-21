@@ -19,3 +19,12 @@ mat-radio-button {
   padding: 0.5rem;
 }
 
+.image-field div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    opacity: 0.8;
+  }
+}

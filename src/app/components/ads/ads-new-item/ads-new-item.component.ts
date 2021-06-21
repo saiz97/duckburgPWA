@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/auth/user';
 import { DataService } from 'src/app/service/data.service';
@@ -15,6 +15,8 @@ export class AdsNewItemComponent implements OnInit {
   figureForm: FormGroup;
   clothesForm: FormGroup;
 
+  @Output() createdEmitter = new EventEmitter<string>();
+
   @Input() user: User;
 
   constructor(private fb: FormBuilder,
@@ -27,6 +29,7 @@ export class AdsNewItemComponent implements OnInit {
       price: ["", [Validators.required]],
       type: ["", [Validators.required]],
       description: [""],
+      image: ["", [Validators.required]],
       author: [""],
       age: [""],
       isbn: [""],
@@ -39,6 +42,7 @@ export class AdsNewItemComponent implements OnInit {
       price: ["", [Validators.required]],
       size: ["", [Validators.required]],
       description: [""],
+      image: ["", [Validators.required]],
     });
     this.clothesForm = this.fb.group({
       title: ["", [Validators.required]],
@@ -46,14 +50,17 @@ export class AdsNewItemComponent implements OnInit {
       size: ["", [Validators.required]],
       type: ["", [Validators.required]],
       description: [""],
+      image: ["", [Validators.required]],
     });
   }
 
   onCreateComic() {
+    let fileImg = (<any>document.querySelector('#comic-img')).files[0];
+
     const content = {
       title: this.comicForm.controls["title"].value,
       description: this.comicForm.controls["description"].value,
-      image: "",
+      image: '',
       type: this.comicForm.controls["type"].value,
       author: this.comicForm.controls["author"].value,
       age: this.comicForm.controls["age"].value,
@@ -64,28 +71,51 @@ export class AdsNewItemComponent implements OnInit {
       price: this.comicForm.controls["price"].value
     };
 
-    this.dataService.postNewItem(this.user.id, content, "comic").subscribe(response => {
-      this.comicForm.reset();
-      this.notifService.sendMessage("Comic created!", "Well done. Good boy!", "https://static.wikia.nocookie.net/disney/images/d/db/Donald_Duck_Iconic.png/revision/latest/top-crop/width/360/height/360?cb=20160905174817")
+    this.dataService.postImage(this.comicForm.controls["image"].value, fileImg).subscribe(image => {
+      if (image.id) {
+        content.image = image.id;
+        this.dataService.postNewItem(this.user.id, content, "comic").subscribe(response => {
+          this.comicForm.reset();
+          this.notifService.sendMessage("Comic created!", "Well done. Good boy!", "")
+          this.createdEmitter.emit('overview');
+        });
+      } else {
+        alert('Woops.. something went wrong with your image upload. Sorry! \n Please try again.')
+      }
     });
   }
 
+
   onCreateFigure() {
-     const content = {
+    let fileImg = (<any>document.querySelector('#figure-img')).files[0];
+
+    const content = {
       title: this.figureForm.controls["title"].value,
       description: this.figureForm.controls["description"].value,
-      image: "",
+      image: '',
       size: this.figureForm.controls["size"].value,
       price: this.figureForm.controls["price"].value,
     };
 
-    this.dataService.postNewItem(this.user.id, content, "figure").subscribe(response => {
-      this.figureForm.reset();
-      this.notifService.sendMessage("Figure created!", "Well done. Good boy!", "https://static.wikia.nocookie.net/disney/images/d/db/Donald_Duck_Iconic.png/revision/latest/top-crop/width/360/height/360?cb=20160905174817")
+    this.dataService.postImage(this.figureForm.controls["image"].value, fileImg).subscribe(image => {
+      if (image.id) {
+        content.image = image.id;
+        this.dataService.postNewItem(this.user.id, content, "figure").subscribe(response => {
+          this.figureForm.reset();
+          this.notifService.sendMessage("Figure created!", "Well done. Good boy!", "")
+          this.createdEmitter.emit('overview');
+        });
+      } else {
+        alert('Woops.. something went wrong with your image upload. Sorry! \n Please try again.')
+      }
     });
+
+
   }
 
   onCreateClothes() {
+    let fileImg = (<any>document.querySelector('#clothes-img')).files[0];
+
     const content = {
       title: this.clothesForm.controls["title"].value,
       description: this.clothesForm.controls["description"].value,
@@ -95,9 +125,17 @@ export class AdsNewItemComponent implements OnInit {
       price: this.clothesForm.controls["price"].value,
     };
 
-    this.dataService.postNewItem(this.user.id, content, "clothes").subscribe(response => {
-      this.clothesForm.reset();
-      this.notifService.sendMessage("Clothes created!", "Well done. Good boy!", "https://static.wikia.nocookie.net/disney/images/d/db/Donald_Duck_Iconic.png/revision/latest/top-crop/width/360/height/360?cb=20160905174817")
+    this.dataService.postImage(this.clothesForm.controls["image"].value, fileImg).subscribe(image => {
+      if (image.id) {
+        content.image = image.id;
+        this.dataService.postNewItem(this.user.id, content, "clothes").subscribe(response => {
+          this.clothesForm.reset();
+          this.notifService.sendMessage("Clothes created!", "Well done. Good boy!", "");
+          this.createdEmitter.emit('overview');
+        });
+      } else {
+        alert('Woops.. something went wrong with your image upload. Sorry! \n Please try again.')
+      }
     });
   }
 

@@ -93,6 +93,29 @@ export class DataService {
     return this.http.post(`${this.BASE_URL_WP}/duckburg_${type}`, post).pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
+  postImage(file, image): Observable<any> {
+    let re = /(?:\.([^.]+))?$/; // re.exec(file)
+    let fileextension = re.exec(file)[1];
+    let filename = file.replace(/^.*[\\\/]/, '');
+
+    let contentType = 'image/';
+    if (fileextension == "png") contentType += 'png';
+    else if (fileextension == "jpg"
+        || fileextension == "jpeg") contentType += 'jpeg';
+    else if (fileextension == "tiff") contentType += 'tiff';
+    else contentType = 'multipart/form-data';
+
+    let headers = {
+        'Content-Type': `${contentType}`,
+        'Content-Disposition': `attachment; filename=${filename}`
+      }
+
+    return this.http.post(`${this.BASE_URL_WP}/media`, image, {
+      headers: headers
+    }).pipe(retry(3)).pipe(catchError(this.errorHandler));
+
+  }
+
   private errorHandler(error: Error | any): Observable<any> {
     return throwError(error);
   }
